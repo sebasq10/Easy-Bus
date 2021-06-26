@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>Easy-Bus | Usuarios</title>
+</head>
+
+<body class="bg-light">
+    <!--Menu-->
+    <header class="p-3 mb-3 border-bottom shadow-sm" style="background-color: #fff;">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    <li><a href="usuariosAdmin.html" class="nav-link px-2 link-dark">Administrar Usuarios</a></li>
+                    <li><a href="rutasAdmin.html" class="nav-link px-2 link-dark">Administrar Rutas</a></li>
+                </ul>
+
+                <div class="dropdown text-end">
+                    <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src=".\img\user.png" alt="user" width="32" height="32" class="rounded-circle">
+                    </a>
+                    <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                        <li><a class="dropdown-item" href="#">Configuracion</a></li>
+                        <li><a class="dropdown-item" href="#">Perfil</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#">Salir</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container-fluid">
+        <div class="row px-5 mt-4">
+            <div class="col-lg-3">
+                <div class="card">
+                    <div class="card-header" style="background-color: #fff;">
+                        <h3>Agregar Usuario</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre</label>
+                            <input type="text" name="nombre" id="nombre" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label for="primerA" class="form-label">Primer Apellido</label>
+                            <input type="text" name="primerA" id="primerA" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label for="segundoA" class="form-label">Segundo Apellido</label>
+                            <input type="text" name="segundoA" id="segundoA" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label for="nacimiento" class="form-label">Fecha de Nacimiento</label>
+                            <input type="text" name="nacimiento" id="nacimiento" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label for="usuario" class="form-label">Usuario</label>
+                            <input type="text" name="usuario" id="usuario" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label for="rol" class="form-label">Rol del usuario</label>
+                            <select name="rol" id="rol" class="form-select">
+                                <option selected>Seleccione una opcion</option>
+                                <option value="chofer">Chofer</option>
+                                <option value="administrador">Administrador</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="card-footer" style="background-color: #fff;">
+                        <button id="btnAceptar" class="btn"
+                            style="background-color: #4512ff; color: #fff;">Aceptar</button>
+                        <button id="btnCancelar" class="btn btn-default bg-light border mx-3">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8 ">
+                <h3 class="mb-3">Lista de Usuarios</h3>
+                <div class="container-fluid rounded-3 p-0" style="overflow: hidden;">
+                    <table class="table m-0">
+                        <thead class="bg-white">
+                            <tr>
+                                <th>ID</th>
+                                <th>Usuario</th>
+                                <th>Nombre</th>
+                                <th>Primer Apellido</th>
+                                <th>Segundo Apellido</th>
+                                <th>Fecha de Nacimiento</th>
+                                <th>Rol</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbRuta"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row my-2"></div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
