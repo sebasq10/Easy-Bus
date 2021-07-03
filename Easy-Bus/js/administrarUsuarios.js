@@ -150,9 +150,8 @@
     const cambiarEstado = (e) => {
         let btnEstado = e.target;
         let id = btnEstado.dataset.id;
-
         let user = listaUsuario.filter((usuario) => {
-            return usuario.usuarioID === id;
+            return usuario.usuarioID == id;
         });
 
         console.log(user.activo);
