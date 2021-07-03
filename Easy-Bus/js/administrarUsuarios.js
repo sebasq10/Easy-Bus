@@ -87,10 +87,10 @@
             }
 
             if (usuario.activo == 'A') {
-                activo = 'activo';
+                activo = 'Activo';
                 cambiarEstado = 'Desactivar';
             } else {
-                activo = 'inactivo';
+                activo = 'Inactivo';
                 cambiarEstado = 'Activar';
             }
 
@@ -149,14 +149,8 @@
 
     const cambiarEstado = (e) => {
         let btnEstado = e.target;
-        let id = btnEstado.dataset.id;
-        let user = listaUsuario.filter((usuario) => {
-            return usuario.usuarioID == id;
-        });
         let id = parseInt(btnEstado.dataset.id);
-
-        let userIndex = listaUsuario.findIndex((usuario) => usuario.usuarioID === id);
-        user = listaUsuario[userIndex];
+        let user = buscarUsuario(id);
 
         if (user.activo == "A") {
             user.activo = 'I';
@@ -167,13 +161,6 @@
         }
 
         tabla();
-    };
-
-    const buscarUsuario = (id) => {
-        listaUsuario.forEach(usuario => {
-            console.log(usuario);
-            return (1 === id) ? true : false;
-        });
     };
 
     inicializar();
