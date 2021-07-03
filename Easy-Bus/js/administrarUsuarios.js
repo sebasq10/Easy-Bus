@@ -149,6 +149,10 @@
 
     const cambiarEstado = (e) => {
         let btnEstado = e.target;
+        let id = btnEstado.dataset.id;
+        let user = listaUsuario.filter((usuario) => {
+            return usuario.usuarioID == id;
+        });
         let id = parseInt(btnEstado.dataset.id);
 
         let userIndex = listaUsuario.findIndex((usuario) => usuario.usuarioID === id);
