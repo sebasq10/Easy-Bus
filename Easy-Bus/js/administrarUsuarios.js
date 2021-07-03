@@ -53,7 +53,6 @@
         usuario['activo'] = 'A';
         usuario['metodoPagoID'] = 'NULL';
         usuario['usuarioID'] = listaUsuario.length + 1;
-
         listaUsuario.push(Object.assign({}, usuario));
         tabla();
         limpiarDatos();
@@ -91,7 +90,7 @@
                 activo = 'activo';
                 cambiarEstado = 'Desactivar';
             } else {
-                activo = 'inactivo'
+                activo = 'inactivo';
                 cambiarEstado = 'Activar';
             }
 
@@ -122,6 +121,7 @@
             data-id="${usuario.usuarioID}" 
             class="btn btn-default bg-light border btnEliminar">
             Eliminar</button>
+
             </td>
 
             </tr>`;
@@ -153,9 +153,12 @@
         let user = listaUsuario.filter((usuario) => {
             return usuario.usuarioID == id;
         });
+        let id = parseInt(btnEstado.dataset.id);
 
-        console.log(user.activo);
-        if (user.activo == 'A') {
+        let userIndex = listaUsuario.findIndex((usuario) => usuario.usuarioID === id);
+        user = listaUsuario[userIndex];
+
+        if (user.activo == "A") {
             user.activo = 'I';
             btnEstado.innerHTML = 'Activar'
         } else {
@@ -164,6 +167,13 @@
         }
 
         tabla();
+    };
+
+    const buscarUsuario = (id) => {
+        listaUsuario.forEach(usuario => {
+            console.log(usuario);
+            return (1 === id) ? true : false;
+        });
     };
 
     inicializar();

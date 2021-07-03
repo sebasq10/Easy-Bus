@@ -48,7 +48,7 @@ CONSTRAINT pk_ruta_rutaID PRIMARY KEY ( rutaID )
 
 INSERT INTO rol VALUES ('Administrador');
 INSERT INTO rol VALUES ('Chofer');
-INSERT INTO rol VALUES ('Usuario');
+INSERT INTO rol VALUES ('Cliente');
 
 INSERT INTO usuario VALUES ('admin', '1234', 'admin', 'admin', null, NULL, 0, null, 'A'); 
 
