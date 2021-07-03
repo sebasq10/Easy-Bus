@@ -22,7 +22,7 @@ const buscarUsuario = (id) => {
 
 const buscarUserName = (usn) => {
     let userIndex = listaUsuario.findIndex((usuario) => usuario.usn === usn);
-    return listaUsuario[userIndex];
+    return (userIndex !== -1) ? listaUsuario[userIndex] : null;
 };
 const listaRutas = [];
 
@@ -37,5 +37,9 @@ const rutas = {
 const buscarRuta = (id) => {
     let rutaIndex = listaRutas.findIndex((rutas) => rutas.rutaID === id);
     return (rutaIndex !== -1) ? listaRutas[rutaIndex] : null;
+};
 
+const buscarCtp = (ctp) => {
+    let rutaIndex = listaRutas.findIndex((rutas) => rutas.ctp === ctp);
+    return (rutaIndex !== -1) ? listaRutas[rutaIndex] : null;
 };

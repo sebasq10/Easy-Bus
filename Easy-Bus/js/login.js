@@ -41,10 +41,18 @@
     };
     const validarUsuario = (e) => {
         let user = buscarUserName(adminUser.value);
+        if(adminUser.value === "" || adminPass.value === ""){
+            window.alert("Por favor rellenar todos los campos.");
+            return;
+        }
+        if(user === null){
+            window.alert("Error de Usuario y Contraseña.");
+            return;
+        }
         if (user.usn === adminUser.value && adminPass.value === user.contrasenia) {
             window.location = "./usuariosAdmin.html";
         } else {
-            window.alert("Error de Contraseña");
+            window.alert("Error de Usuario y Contraseña.");
         }
     };
     limpiar();

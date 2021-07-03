@@ -38,6 +38,11 @@
     const crearRuta = () => {
         rutas['rutaID'] = listaRutas.length + 1;
 
+        if(buscarCtp(ctp.value) !== null){
+            window.alert("El CTP ya existe. Utilice otro.");
+            return;
+        }
+
         if (btnAceptar.innerHTML === "Aceptar") {
             listaRutas.push(Object.assign({}, rutas));
         } else {
@@ -91,7 +96,7 @@
             <td>${rutas.rutaID}</td>
             <td>${rutas.ctp}</td>
             <td>${rutas.ruta}</td>
-            <td>${rutas.provincia}</td>
+            <td>${provincia}</td>
             <td>${rutas.canton}</td>
             <td>${rutas.costo}</td>
             <td>

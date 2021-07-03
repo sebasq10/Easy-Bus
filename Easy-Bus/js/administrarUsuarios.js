@@ -55,6 +55,16 @@
         usuario['metodoPagoID'] = 'NULL';
         usuario['usuarioID'] = listaUsuario.length + 1;
 
+        if(buscarUserName(usn.value) !== null){
+            window.alert("El usuario ya existe. Utilice otro.");
+            return;
+        }
+
+        if(contrasenia.value !== contrasenaConf.value){
+            window.alert("La confirmación de contraseña es diferente. ");
+            return;
+        }
+
         if (btnAceptar.innerHTML === "Aceptar") {
             listaUsuario.push(Object.assign({}, usuario));
         } else {
