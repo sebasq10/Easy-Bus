@@ -15,7 +15,7 @@ const usuario = {
 
 const buscarUsuario = (id) => {
     let userIndex = listaUsuario.findIndex((usuario) => usuario.usuarioID === id);
-    return listaUsuario[userIndex];
+    return (userIndex !== -1) ? listaUsuario[userIndex] : null;
 };
 
 const buscarUserName = (usn) => {

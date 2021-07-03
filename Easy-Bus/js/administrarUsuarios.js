@@ -13,6 +13,7 @@
     let btnAceptar = {};
     let btnLimpiar = {};
 
+    let tempID = {};
 
     const inicializar = () => {
         nombre = document.querySelector('#nombre');
@@ -53,7 +54,22 @@
         usuario['activo'] = 'A';
         usuario['metodoPagoID'] = 'NULL';
         usuario['usuarioID'] = listaUsuario.length + 1;
-        listaUsuario.push(Object.assign({}, usuario));
+
+        if (btnAceptar.innerHTML === "Aceptar") {
+            listaUsuario.push(Object.assign({}, usuario));
+        } else {
+            listaUsuario[tempID].nombre = nombre.value;
+            listaUsuario[tempID].apellido1 = primerA.value;
+            listaUsuario[tempID].apellido2 = segundoA.value;
+            listaUsuario[tempID].fechaNacimiento = nacimiento.value;
+            listaUsuario[tempID].usn = usn.value;
+            listaUsuario[tempID].contrasena = contrasena.value;
+            listaUsuario[tempID].rolID = rolID.value;
+            tempID = -1;
+            btnAceptar.innerHTML = "Aceptar";
+        }
+
+
         tabla();
         limpiarDatos();
     };
@@ -77,7 +93,7 @@
             let rol = "";
             let activo = "";
             let cambiarEstado = "";
-
+            let fondoDes = "";
             if (usuario.rolID == 0) {
                 rol = 'Administrador';
             } else if (usuario.rolID == 1) {
@@ -89,13 +105,15 @@
             if (usuario.activo == 'A') {
                 activo = 'Activo';
                 cambiarEstado = 'Desactivar';
+                fondoDes = "class= 'bg-white'";
             } else {
                 activo = 'Inactivo';
                 cambiarEstado = 'Activar';
+                fondoDes = "class= 'bg-light'";
             }
 
 
-            tbAdmin.innerHTML += `<tr>
+            tbAdmin.innerHTML += `<tr ${fondoDes}>
             <td>${usuario.usuarioID}</td>
             <td>${usuario.usn}</td>
             <td>${usuario.nombre}</td>
@@ -109,17 +127,17 @@
 
             <button 
             data-id="${usuario.usuarioID}" 
-            class="btn btnEstado">
+            class="btn btnEstado btn-sm mb-2 me-md-2">
             ${cambiarEstado}</button>
-
+            <br>
             <button 
             data-id="${usuario.usuarioID}" 
-            class="btn btnEditar">
+            class="btn btnEditar btn-sm mb-2 me-md-2">
             Editar</button>
-
+            <br>
             <button 
             data-id="${usuario.usuarioID}" 
-            class="btn btn-default bg-light border btnEliminar">
+            class="btn btn-default bg-light border btnEliminar btn-sm me-md-2">
             Eliminar</button>
 
             </td>
@@ -140,11 +158,37 @@
     };
 
     const editarUsuario = (e) => {
+        let btnEditar = e.target;
+        let id = parseInt(btnEditar.dataset.id);
+        tempID = id - 1;
+        let user = buscarUsuario(id);
 
+        nombre.value = user["nombre"];
+        primerA.value = user["apellido1"];
+        segundoA.value = user["apellido2"];
+        fechaNacimiento.value = user["fechaNacimiento"];
+        usn.value = user["usn"];
+
+        if (user["rolID"] == 0) {
+            rolID.value = 'Administrador';
+        } else if (user["rolID"] == 1) {
+            rolID.value = 'Chofer';
+        } else {
+            rolID.value = 'Cliente';
+        }
+
+        btnAceptar.innerHTML = "Modificar";
     };
 
     const eliminarUsuario = (e) => {
+        let btnEliminar = e.target;
+        let id = parseInt(btnEliminar.dataset.id);
+        let pos = id - 1;
 
+        listaUsuario.splice(pos, 1);
+
+        limpiarDatos();
+        tabla();
     };
 
     const cambiarEstado = (e) => {
