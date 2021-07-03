@@ -10,6 +10,5 @@ const usuario = {
     fechaNacimiento: "",
     rolID: 0,
     metodoPagoID: "",
-    activo: "",
+    activo: ""
 };
-
