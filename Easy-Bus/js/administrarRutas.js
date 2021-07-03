@@ -41,6 +41,7 @@
         if (btnAceptar.innerHTML === "Aceptar") {
             listaRutas.push(Object.assign({}, rutas));
         } else {
+            btnAceptar.innerHTML = "Aceptar"
             listaRutas[tempID].ctp = ctp.value;
             listaRutas[tempID].ruta = ruta.value;
             listaRutas[tempID].provincia = provincia.value;
