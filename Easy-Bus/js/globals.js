@@ -13,6 +13,8 @@ const usuario = {
     activo: ""
 };
 
+
+
 const buscarUsuario = (id) => {
     let userIndex = listaUsuario.findIndex((usuario) => usuario.usuarioID === id);
     return (userIndex !== -1) ? listaUsuario[userIndex] : null;
