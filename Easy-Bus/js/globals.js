@@ -1,18 +1,15 @@
-(function () {
+const listaUsuario = [];
 
-    
-    let usuario = {
-        usuarioID: 0,
-        usuario: "",
-        contrasenia: "",
-        nombre: "",
-        apellido1: "",
-        apellido2: "",
-        fechaNacimiento: "",
-        rolID: 0,
-        metodoPagoID: "",
-        activo: "",
-    }
+const usuario = {
+    usuarioID: 0,
+    usn: "",
+    contrasenia: "",
+    nombre: "",
+    apellido1: "",
+    apellido2: "",
+    fechaNacimiento: "",
+    rolID: 0,
+    metodoPagoID: "",
+    activo: "",
+};
 
-    let listaUsuarios=[];
-})();
