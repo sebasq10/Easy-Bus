@@ -41,13 +41,14 @@
         if (btnAceptar.innerHTML === "Aceptar") {
             listaRutas.push(Object.assign({}, rutas));
         } else {
-            btnAceptar.innerHTML = "Aceptar"
+            btnAceptar.innerHTML = "Aceptar";
             listaRutas[tempID].ctp = ctp.value;
             listaRutas[tempID].ruta = ruta.value;
             listaRutas[tempID].provincia = provincia.value;
             listaRutas[tempID].canton = canton.value;
             listaRutas[tempID].costo = costo.value;
             tempID = -1;
+            btnAceptar.innerHTML = "Aceptar";
         }
 
         tabla();
