@@ -1,6 +1,6 @@
 // const rest = new (require('rest-mssql-nodejs'))({
 //     user: 'admin',
-//     password: '1T2Bm4k3r',
+//     password: '',
 //     server: 'DESKTOP-FDUQL33\\MSSQLSERVER',
 //     database: 'Easy-bus'
 // });
