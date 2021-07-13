@@ -24,6 +24,11 @@ const buscarUserName = (usn) => {
     let userIndex = listaUsuario.findIndex((usuario) => usuario.usn === usn);
     return (userIndex !== -1) ? listaUsuario[userIndex] : null;
 };
+
+const buscarCorreo = (correo) => {
+    let userIndex = listaUsuario.findIndex((usuario) => usuario.correo === correo);
+    return (userIndex !== -1) ? listaUsuario[userIndex] : null;
+};
 const listaRutas = [];
 
 const rutas = {
@@ -34,6 +39,7 @@ const rutas = {
     canton: "",
     costo: "",
 };
+
 const buscarRuta = (id) => {
     let rutaIndex = listaRutas.findIndex((rutas) => rutas.rutaID === id);
     return (rutaIndex !== -1) ? listaRutas[rutaIndex] : null;

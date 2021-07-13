@@ -2,11 +2,12 @@
 
     const inicializar = () => {
         btnIngresar = document.querySelector('#btnIngresar');
-        btnLimpiar = document.querySelector('#btnLimpiar');
+        btnCrearCuenta = document.querySelector('#btnCrearCuenta');
         adminUser=document.querySelector('#adminUser');
         adminPass=document.querySelector('#adminPass');
 
         btnIngresar.onclick = validarUsuario;
+        
 
         usuarioAdmin = {
             usuarioID:1,
