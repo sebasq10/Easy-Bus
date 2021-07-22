@@ -1,61 +1,38 @@
 (function () {
 
-    const inicializar = () => {
+    let btnIngresar = {};
+    let adminUser = {};
+    let adminPass = {};
+
+    const inicializar = async () => {
         btnIngresar = document.querySelector('#btnIngresar');
-        btnCrearCuenta = document.querySelector('#btnCrearCuenta');
-        adminUser=document.querySelector('#adminUser');
-        adminPass=document.querySelector('#adminPass');
+        adminUser = document.querySelector('#usuario');
+        adminPass = document.querySelector('#contrasena');
 
         btnIngresar.onclick = validarUsuario;
-        
 
-        usuarioAdmin = {
-            usuarioID:1,
-            usn: "admin",
-            contrasenia: "admin",
-            nombre: "",
-            apellido1: "",
-            apellido2: "",
-            fechaNacimiento: "",
-            rolID: 0,
-            metodoPagoID: "",
-            activo: "A"
-        }
-        usuarioAdmin2 = {
-            usuarioID:2,
-            usn: "admin2",
-            contrasenia: "admin2",
-            nombre: "",
-            apellido1: "",
-            apellido2: "",
-            fechaNacimiento: "",
-            rolID: 0,
-            metodoPagoID: "",
-            activo: "A"
-        }
-        listaUsuario.push(Object.assign({}, usuarioAdmin));
-        listaUsuario.push(Object.assign({}, usuarioAdmin2));
+        await fetchUsuarios();
     };
-    const limpiar = () => {
-        adminUser.value = '';
-        adminPass.value = '';
-    };
+
     const validarUsuario = (e) => {
-        let user = buscarUserName(adminUser.value);
-        if(adminUser.value === "" || adminPass.value === ""){
+
+        let user = listaUsuarios.find(usu => usu.usuario == adminUser.value);
+
+        if (adminUser.value === "" || adminPass.value === "") {
             window.alert("Por favor rellenar todos los campos.");
             return;
         }
-        if(user === null){
-            window.alert("Error de Usuario y Contraseña.");
+        if (user == null) {
+            window.alert("Usuario o contrasena incorrectos.");
             return;
         }
-        if (user.usn === adminUser.value && adminPass.value === user.contrasenia) {
+        if (user.usuario === adminUser.value && adminPass.value === user.contrasena) {
             window.location = "./usuariosAdmin.html";
         } else {
-            window.alert("Error de Usuario y Contraseña.");
+            window.alert("Usuario o contrasena incorrectos.");
         }
     };
-    limpiar();
+
     inicializar();
+    
 })();

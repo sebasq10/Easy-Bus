@@ -23,7 +23,8 @@
         rolID = document.querySelector('#rol');
         btnAceptar = document.querySelector('#btnAceptar');
         btnLimpiar = document.querySelector('#btnLimpiar');
-        await getBases();
+        await fetchUsuarios();
+        await fetchRoles();
         bind();
         tabla();
     };
@@ -50,17 +51,20 @@
     };
 
     const crearUsuario = async () => {
+        let existe = listaUsuarios.find((usu) => usu.usuario == usn.value);
 
-        /*  if (buscarUserName(usn.value) !== null) {
+        /*
+        if (existe !== null) {
             window.alert("El usuario ya existe. Utilice otro.");
             return;
         }
 
-        if (contrasenia.value !== contrasenaConf.value) {
+        if (contrasena.value !== contrasenaConf.value) {
             window.alert("La confirmación de contraseña es diferente. ");
             return;
-        } */
-
+        } 
+        */
+       
         if (btnAceptar.innerHTML === "Aceptar") {
             fetch(`${url}/usuarios`, {
                 headers: {
@@ -98,7 +102,8 @@
         }
 
         tempID = "";
-        getBases();
+        fetchUsuarios();
+        fetchRoles()
         tabla();
         limpiarDatos();
     }
@@ -211,8 +216,7 @@
             .then((res) => console.log(res))
             .catch((error) => console.log(error));
 
-        getBases();
-
+        fetchUsuarios();
         limpiarDatos();
         tabla();
     };
@@ -241,7 +245,7 @@
             .then((res) => console.log(res))
             .catch((error) => console.log(error));
 
-        getBases();
+        fetchUsuarios();
         tabla();
     };
 

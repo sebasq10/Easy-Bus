@@ -1,12 +1,16 @@
 let listaUsuarios = [];
 let listaRutas = [];
 let listaRoles = [];
-
-const url = `http://localhost:5000`;
-
 const usuario = {};
 const rutas = {};
 
+const url = `http://localhost:5000`;
+
+/**
+ * Duerme los hilos
+ * @param {D} mili milisegundos
+ * @returns promesa que espera.
+ */
 const sleep = (mili) => {
     return new Promise((resultado) => setTimeout(resultado, mili));
 };
@@ -14,17 +18,21 @@ const sleep = (mili) => {
 /**
  * Hace fetch a las bases de datos y lo guarda en el arreglo correspondiente
  */
-const getBases = async () => {
+const fetchUsuarios = async () => {
 
     let datos = await fetch(`${url}/usuarios`)
         .then((response) => response.json());
     listaUsuarios = datos;
+};
 
-    datos = await fetch(`${url}/roles`)
+const fetchRoles = async () => {
+
+    let datos = await fetch(`${url}/roles`)
         .then((response) => response.json());
 
     listaRoles = datos;
 };
+
 
 const fetchRutas = async () => {
 
