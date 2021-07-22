@@ -12,23 +12,25 @@
     let metodoPagoID = {};
     let btnAceptar = {};
     let btnLimpiar = {};
-
+    let lista = [];
     let tempID = {};
 
-    const inicializar = () => {
+    const inicializar = async () => {
         nombre = document.querySelector('#nombre');
-        primerA = document.querySelector('#apellido1');
-        segundoA = document.querySelector('#apellido2');
+        primerA = document.querySelector('#pApellido');
+        segundoA = document.querySelector('#sApellido');
         nacimiento = document.querySelector('#fechaNacimiento');
-        usn = document.querySelector('#usn');
-        contrasena = document.querySelector('#contrasenia');
+        usn = document.querySelector('#usuario');
+        contrasena = document.querySelector('#contrasena');
         contrasenaConf = document.querySelector('#contrasenaConf');
-        rolID = document.querySelector('#rolID');
+        rolID = document.querySelector('#rol');
         btnAceptar = document.querySelector('#btnAceptar');
         btnLimpiar = document.querySelector('#btnLimpiar');
+        await getBases();
         bind();
-        tabla();
+        await tabla();
     };
+
 
     const bind = () => {
         nombre.onchange = infoTarget;
@@ -46,27 +48,33 @@
 
     const infoTarget = (e) => {
         const { name, value } = e.target;
-        //console.log(name, ':', value)
+        console.log(name, ':', value)
         usuario[name] = value;
     };
 
-    const crearUsuario = () => {
-        usuario['activo'] = 'A';
-        usuario['metodoPagoID'] = 'NULL';
-        usuario['usuarioID'] = listaUsuario.length + 1;
+    const crearUsuario = async () => {
 
-        if(buscarUserName(usn.value) !== null){
+        /*  if (buscarUserName(usn.value) !== null) {
             window.alert("El usuario ya existe. Utilice otro.");
             return;
         }
 
-        if(contrasenia.value !== contrasenaConf.value){
+        if (contrasenia.value !== contrasenaConf.value) {
             window.alert("La confirmación de contraseña es diferente. ");
             return;
-        }
+        } */
 
         if (btnAceptar.innerHTML === "Aceptar") {
-            listaUsuario.push(Object.assign({}, usuario));
+            fetch(`${url}/usuarios`, {
+                headers: {
+                  Accept: "application/json",
+                  "Content-type": "application/json",
+                },
+                method: "POST",
+                body: JSON.stringify(usuario),
+              })
+                .then((res) => console.log(res))
+                .catch((error) => console.log(error));
         } else {
             listaUsuario[tempID].nombre = nombre.value;
             listaUsuario[tempID].apellido1 = primerA.value;
@@ -75,11 +83,10 @@
             listaUsuario[tempID].usn = usn.value;
             listaUsuario[tempID].contrasena = contrasena.value;
             listaUsuario[tempID].rolID = rolID.value;
-            tempID = -1;
             btnAceptar.innerHTML = "Aceptar";
         }
 
-
+        await getBases();
         tabla();
         limpiarDatos();
     };
@@ -95,58 +102,53 @@
         rolID.value = 'Seleccione una opcion';
     };
 
-    const tabla = () => {
+    const tabla = async () => {
+
         let tbAdmin = document.querySelector('#tbUsuarios');
         tbAdmin.innerHTML = '';
 
-        listaUsuario.forEach((usuario) => {
-            let rol = "";
-            let activo = "";
-            let cambiarEstado = "";
+        let controlesEstado = document.getElementsByClassName("btnEstado");
+        let controlesEditar = document.getElementsByClassName("btnEditar");
+        let controlesEliminar = document.getElementsByClassName("btnEliminar");
+
+
+        listaUsuarios.forEach(usuario => {
             let fondoDes = "";
-            if (usuario.rolID == 0) {
-                rol = 'Administrador';
-            } else if (usuario.rolID == 1) {
-                rol = 'chofer';
-            } else {
-                rol = 'cliente';
-            }
+            let rolUsuario = listaRoles.find((id) => id._id == usuario.rol);
+            let estado=""
 
-            if (usuario.activo == 'A') {
-                activo = 'Activo';
-                cambiarEstado = 'Desactivar';
+            if (usuario.estado == "Activo") {
                 fondoDes = "class= 'bg-white'";
+                estado= "Desactivar";
             } else {
-                activo = 'Inactivo';
-                cambiarEstado = 'Activar';
                 fondoDes = "class= 'bg-light'";
+                estado= "Activar";
             }
-
 
             tbAdmin.innerHTML += `<tr ${fondoDes}>
-            <td>${usuario.usuarioID}</td>
-            <td>${usuario.usn}</td>
+            <td>${usuario._id}</td>
+            <td>${usuario.usuario}</td>
             <td>${usuario.nombre}</td>
-            <td>${usuario.apellido1}</td>
-            <td>${usuario.apellido2}</td>
+            <td>${usuario.pApellido}</td>
+            <td>${usuario.sApellido}</td>
             <td>${usuario.fechaNacimiento}</td>
-            <td>${rol}</td>
-            <td>${usuario.metodoPagoID}</td>
-            <td>${activo}</td>
+            <td>${rolUsuario.tipoRol}</td>
+            <td>${usuario.metodoPago}</td>
+            <td>${usuario.estado}</td>
             <td>
 
             <button 
-            data-id="${usuario.usuarioID}" 
+            data-id="${usuario._id}" 
             class="btn btnEstado btn-sm mb-2 me-md-2">
-            ${cambiarEstado}</button>
+             ${estado}</button>
             <br>
             <button 
-            data-id="${usuario.usuarioID}" 
+            data-id="${usuario._id}" 
             class="btn btnEditar btn-sm mb-2 me-md-2">
             Editar</button>
             <br>
             <button 
-            data-id="${usuario.usuarioID}" 
+            data-id="${usuario._id}" 
             class="btn btn-default bg-light border btnEliminar btn-sm me-md-2">
             Eliminar</button>
 
@@ -154,34 +156,29 @@
 
             </tr>`;
         });
-
-        let controlesEstado = document.getElementsByClassName("btnEstado");
-        let controlesEditar = document.getElementsByClassName("btnEditar");
-        let controlesEliminar = document.getElementsByClassName("btnEliminar");
-
-        for (var i = 0; i < listaUsuario.length; ++i) {
+       
+        for (var i = 0; i < listaUsuarios.length; ++i) {
             controlesEditar[i].onclick = editarUsuario;
             controlesEliminar[i].onclick = eliminarUsuario;
             controlesEstado[i].onclick = cambiarEstado;
-        }
+        };
 
     };
 
     const editarUsuario = (e) => {
         let btnEditar = e.target;
-        let id = parseInt(btnEditar.dataset.id);
-        tempID = id - 1;
-        let user = buscarUsuario(id);
+        let idBtn = btnEditar.dataset.id;
+        let user = listaUsuarios.find((usnId) => usnId._id == idBtn);
 
         nombre.value = user["nombre"];
-        primerA.value = user["apellido1"];
-        segundoA.value = user["apellido2"];
+        primerA.value = user["pApellido"];
+        segundoA.value = user["sApellido"];
         fechaNacimiento.value = user["fechaNacimiento"];
-        usn.value = user["usn"];
+        usn.value = user["usuario"];
 
-        if (user["rolID"] == 0) {
+        if (user["rol"] == "60f849fb3eff242d77c9dece") {
             rolID.value = 'Administrador';
-        } else if (user["rolID"] == 1) {
+        } else if (user["rolID"] == "60f849fe3eff242d77c9ded0") {
             rolID.value = 'Chofer';
         } else {
             rolID.value = 'Cliente';
@@ -203,7 +200,7 @@
 
     const cambiarEstado = (e) => {
         let btnEstado = e.target;
-        let id = parseInt(btnEstado.dataset.id);
+        let id = btnEstado.dataset.id;
         let user = buscarUsuario(id);
 
         if (user.activo == "A") {

@@ -11,18 +11,29 @@
     <title>Easy-Bus | Usuarios</title>
 
     <style>
-        .btnEstado{
+        .btnEstado {
             background-color: #4512ff;
             color: #fff;
         }
 
-        .btnEditar{
+        .btnEditar {
             background-color: #6641f0;
             color: #fff;
         }
 
-        .btnEliminar{
+        .btnEliminar {
             color: #000;
+        }
+
+        table {
+            display: block;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        table tbody {
+            display: table;
+            width: 100%;
         }
     </style>
 </head>
@@ -30,10 +41,10 @@
 <body class="bg-light">
 
     <script>
-         function Salir() {
-             window.location.href = "login.html";
-         }
-     </script>
+        function Salir() {
+            window.location.href = "login.html";
+        }
+    </script>
 
     <!--Menu-->
     <header class="p-3 mb-3 border-bottom shadow-sm" style="background-color: #fff;">
@@ -63,7 +74,7 @@
     </header>
     <!--Contenido de pagina-->
     <div class="container-fluid">
-        <div class="row px-5 mt-4 mx-0">
+        <div class="row px-0 mt-4 mx-0">
             <div class="col-lg-3">
                 <!--Ingresa Datos de Usuario-->
                 <div class="card">
@@ -76,42 +87,43 @@
                             <input type="text" name="nombre" id="nombre" class="form-control">
                         </div>
                         <div class="mb-3">
-                            <label for="apellido1" class="form-label">Primer Apellido</label>
-                            <input type="text" name="apellido1" id="apellido1" class="form-control">
+                            <label for="pApellido" class="form-label">Primer Apellido</label>
+                            <input type="text" name="pApellido" id="pApellido" class="form-control">
                         </div>
                         <div class="mb-3">
-                            <label for="apellido2" class="form-label">Segundo Apellido</label>
-                            <input type="text" name="apellido2" id="apellido2" class="form-control">
+                            <label for="sApellido" class="form-label">Segundo Apellido</label>
+                            <input type="text" name="sApellido" id="sApellido" class="form-control">
                         </div>
                         <div class="mb-3">
                             <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento</label>
                             <input type="date" name="fechaNacimiento" id="fechaNacimiento" class="form-control">
                         </div>
                         <div class="mb-3">
-                            <label for="usn" class="form-label">Usuario</label>
-                            <input type="text" name="usn" id="usn" class="form-control">
+                            <label for="usuario" class="form-label">Usuario</label>
+                            <input type="text" name="usuario" id="usuario" class="form-control">
                         </div>
                         <div class="mb-3">
-                            <label for="contrasenia" class="form-label">Contrasena</label>
-                            <input type="password" name="contrasenia" id="contrasenia" class="form-control">
+                            <label for="contrasena" class="form-label">Contrasena</label>
+                            <input type="password" name="contrasena" id="contrasena" class="form-control">
                         </div>
                         <div class="mb-3">
                             <label for="contrasenaConf" class="form-label">Confirmar Contrasena</label>
                             <input type="password" name="contrasenaConf" id="contrasenaConf" class="form-control">
                         </div>
                         <div class="mb-3">
-                            <label for="rolID" class="form-label">Rol del usuario</label>
-                            <select name="rolID" id="rolID" class="form-select">
+                            <label for="rol" class="form-label">Rol del usuario</label>
+                            <select name="rol" id="rol" class="form-select">
                                 <option selected>Seleccione una opcion</option>
-                                <option value="1">Chofer</option>
-                                <option value="0">Administrador</option>
+                                <option value="60f849fe3eff242d77c9ded0">Chofer</option>
+                                <option value="60f849fb3eff242d77c9dece">Administrador</option>
                             </select>
                         </div>
                     </div>
                     <div class="card-footer bg-white">
-                        <button id="btnAceptar" class="btn" 
+                        <button id="btnAceptar" class="btn"
                             style="background-color: #4512ff; color: #fff;">Aceptar</button>
-                        <button id="btnLimpiar" class="btn btn-default bg-light border mx-3" onclick="Limpiar()">Limpiar</button>
+                        <button id="btnLimpiar" class="btn btn-default bg-light border mx-3"
+                            onclick="Limpiar()">Limpiar</button>
                     </div>
                 </div>
             </div>
@@ -119,8 +131,8 @@
             <div class="col-lg-8 ">
                 <h3 class="mb-3">Lista de Usuarios</h3>
                 <div class="container-fluid rounded-3 p-0" style="overflow: hidden;">
-                    <table class="table m-0 bg-white border">
-                        <thead >
+                    <table class="table m-0 bg-white border" style="width: 100%">
+                        <thead>
                             <tr>
                                 <th>ID</th>
                                 <th>Usuario</th>
