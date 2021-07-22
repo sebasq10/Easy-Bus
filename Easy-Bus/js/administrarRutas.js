@@ -111,12 +111,12 @@
             <td>
 
             <button 
-            data-id="${rutas.rutaID}" 
+            data-id="${rutas._id}" 
             class="btn btnEditar">
             Editar</button>
 
             <button 
-            data-id="${rutas.rutaID}" 
+            data-id="${rutas._id}" 
             class="btn btn-default bg-light border btnEliminar">
             Eliminar</button>
             </td>
@@ -137,34 +137,17 @@
         let rutaE = listaRutas.find((rutaid) => rutaid._id == id);
         tempID = rutaE._id;
 
-        ctp.value = route["CTP"];
-        ruta.value = route["nombreRuta"];
-        provincia.value = route["provincia"];
-        canton.value = route["canton"];
-        costo.value = route["precio"];
-
-        if (rutas.provincia == 'San Jose') {
-            provincia.value = 'San Jose';
-        } else if (rutas.provincia == 'Heredia') {
-            provincia.value = 'Heredia';
-        } else if (rutas.provincia == 'Alajuela') {
-            provincia.value = 'Alajuela';
-        } else if (rutas.provincia == 'Cartago') {
-            provincia.value = 'Cartago';
-        } else if (rutas.provincia == 'Guanacaste') {
-            provincia.value = 'Guanacaste';
-        } else if (rutas.provincia == 'Puntarenas') {
-            provincia.value = 'Puntarenas';
-        } else {
-            rolID.value = 'Limon';
-        }
+        ctp.value = rutaE["CTP"];
+        ruta.value = rutaE["nombreRuta"];
+        provincia.value = rutaE["provincia"];
+        canton.value = rutaE["canton"];
+        costo.value = rutaE["precio"];
+        provincia.value = rutaE.provincia;
 
         btnAceptar.innerHTML = "Modificar";
     };
 
-
-
-    const eliminarRuta = (e) => {
+    const eliminarRuta = async (e) => {
         let btnEliminar = e.target;
         let id = btnEliminar.dataset.id;
         let rutaE = listaRutas.find((rutaid) => rutaid._id == id);
@@ -175,7 +158,7 @@
             .then((res) => console.log(res))
             .catch((error) => console.log(error));
 
-        fetchRutas();
+        await fetchRutas();
         limpiarDatos();
         tabla();
     };
