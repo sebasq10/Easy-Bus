@@ -10,6 +10,7 @@ const usuarioSchema = new Schema({
     usuario: {
         type: String,
         required: true,
+        unique: true,
         trim: true
     },
     contrasena: {
