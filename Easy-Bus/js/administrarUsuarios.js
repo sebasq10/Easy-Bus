@@ -28,7 +28,7 @@
         btnLimpiar = document.querySelector('#btnLimpiar');
         await getBases();
         bind();
-        await tabla();
+        tabla();
     };
 
 
@@ -98,11 +98,11 @@
             })
                 .then((res) => console.log(res))
                 .catch((error) => console.log(error));
-        };
+        }
 
         tempID = "";
-        await getBases();
-        await tabla();
+        getBases();
+        tabla();
         limpiarDatos();
     }
 
@@ -117,7 +117,7 @@
         rolID.value = 'Seleccione una opcion';
     };
 
-    const tabla = async () => {
+    const tabla = () => {
 
         let tbAdmin = document.querySelector('#tbUsuarios');
         tbAdmin.innerHTML = '';
@@ -176,7 +176,7 @@
             controlesEditar[i].onclick = editarUsuario;
             controlesEliminar[i].onclick = eliminarUsuario;
             controlesEstado[i].onclick = cambiarEstado;
-        };
+        }
 
     };
 
@@ -205,28 +205,47 @@
 
     const eliminarUsuario = (e) => {
         let btnEliminar = e.target;
-        let id = parseInt(btnEliminar.dataset.id);
-        let pos = id - 1;
+        let id = btnEliminar.dataset.id;
 
-        listaUsuario.splice(pos, 1);
+        let user = listaUsuarios.find((user) => user._id == id);
+
+        fetch(`${url}/usuarios/${user._id}`, {
+            method: "DELETE"
+        })
+            .then((res) => console.log(res))
+            .catch((error) => console.log(error));
+
+        getBases();
 
         limpiarDatos();
         tabla();
     };
 
     const cambiarEstado = (e) => {
-        let btnEstado = e.target;
-        let id = btnEstado.dataset.id;
-        let user = buscarUsuario(id);
 
-        if (user.activo == "A") {
-            user.activo = 'I';
-            btnEstado.innerHTML = 'Activar'
+        let btnEstado = e.target;
+        let idBtn = btnEstado.dataset.id;
+        let user = listaUsuarios.find((usnId) => usnId._id == idBtn);
+
+        if (user.estado == "Activo") {
+            user["estado"] = "Inactivo";
         } else {
-            user.activo = 'A';
-            btnEstado.innerHTML = 'Desactivar'
+            user["estado"] = "Activo";
         }
 
+
+        fetch(`${url}/usuarios/${user._id}`, {
+            headers: {
+                Accept: "application/json",
+                "Content-type": "application/json",
+            },
+            method: "PUT",
+            body: JSON.stringify(user),
+        })
+            .then((res) => console.log(res))
+            .catch((error) => console.log(error));
+
+        getBases();
         tabla();
     };
 
