@@ -1,6 +1,5 @@
 (function () {
 
-    let rutaID = {};
     let ctp = {};
     let ruta = {};
     let provincia = {};
@@ -9,14 +8,15 @@
 
     let tempID = {};
 
-    const inicializar = () => {
-        ctp = document.querySelector('#ctp');
-        ruta = document.querySelector('#ruta');
+    const inicializar = async () => {
+        ctp = document.querySelector('#CTP');
+        ruta = document.querySelector('#nombreRuta');
         provincia = document.querySelector('#provincia');
         canton = document.querySelector('#canton');
-        costo = document.querySelector('#costo');
+        costo = document.querySelector('#precio');
         btnAceptar.onclick = crearRuta;
         btnLimpiar.onclick = limpiarDatos;
+        await fetchRutas();
         bind();
         tabla();
     };
@@ -28,34 +28,57 @@
         canton.onchange = infoTarget;
         costo.onchange = infoTarget;
     };
-    
+
     const infoTarget = (e) => {
         const { name, value } = e.target;
         //console.log(name, ':', value)
         rutas[name] = value;
     };
 
-    const crearRuta = () => {
+    const crearRuta = async () => {
         rutas['rutaID'] = listaRutas.length + 1;
 
-        if(buscarCtp(ctp.value) !== null){
-            window.alert("El CTP ya existe. Utilice otro.");
-            return;
-        }
+        /*  if (buscarCtp(ctp.value) !== null) {
+             window.alert("El CTP ya existe. Utilice otro.");
+             return;
+         } */
 
         if (btnAceptar.innerHTML === "Aceptar") {
-            listaRutas.push(Object.assign({}, rutas));
+            fetch(`${url}/rutas`, {
+                headers: {
+                    Accept: "application/json",
+                    "Content-type": "application/json",
+                },
+                method: "POST",
+                body: JSON.stringify(rutas),
+            })
+                .then((res) => console.log(res))
+                .catch((error) => console.log(error));
         } else {
+
+            let ruta = listaRutas.find((x) => x._id == tempID);
+
+            ruta.CTP = ctp.value;
+            ruta.nombreRuta = ruta.value;
+            ruta.provincia = provincia.value;
+            ruta.canton = canton.value;
+            ruta.precio = costo.value;
             btnAceptar.innerHTML = "Aceptar";
-            listaRutas[tempID].ctp = ctp.value;
-            listaRutas[tempID].ruta = ruta.value;
-            listaRutas[tempID].provincia = provincia.value;
-            listaRutas[tempID].canton = canton.value;
-            listaRutas[tempID].costo = costo.value;
-            tempID = -1;
-            btnAceptar.innerHTML = "Aceptar";
+
+            fetch(`${url}/rutas/${tempID}`, {
+                headers: {
+                    Accept: "application/json",
+                    "Content-type": "application/json",
+                },
+                method: "PUT",
+                body: JSON.stringify(ruta),
+            })
+                .then((res) => console.log(res))
+                .catch((error) => console.log(error));
         }
 
+        tempID = "";
+        await fetchRutas();
         tabla();
         limpiarDatos();
     };
@@ -72,33 +95,19 @@
         let tbAdminRuta = document.querySelector('#tbRuta');
         tbAdminRuta.innerHTML = '';
 
+        let controlesEditar = document.getElementsByClassName("btnEditar");
+        let controlesEliminar = document.getElementsByClassName("btnEliminar");
+
         listaRutas.forEach((rutas) => {
             let provincia = "";
 
-            if (rutas.provincia == 0) {
-                provincia = 'San Jose';
-            } else if (rutas.provincia == 1) {
-                provincia = 'Heredia';
-            } else if (rutas.provincia == 2) {
-                provincia = 'Alajuela';
-            } else if (rutas.provincia == 3) {
-                provincia = 'Cartago';
-            } else if (rutas.provincia == 4) {
-                provincia = 'Guanacaste';
-            } else if (rutas.provincia == 5) {
-                provincia = 'Puntarenas';
-            } else {
-                provincia = 'Limon';
-            }
-
-
             tbAdminRuta.innerHTML += `<tr>
-            <td>${rutas.rutaID}</td>
-            <td>${rutas.ctp}</td>
-            <td>${rutas.ruta}</td>
-            <td>${provincia}</td>
+            <td>${rutas._id}</td>
+            <td>${rutas.CTP}</td>
+            <td>${rutas.nombreRuta}</td>
+            <td>${rutas.provincia}</td>
             <td>${rutas.canton}</td>
-            <td>${rutas.costo}</td>
+            <td>${rutas.precio}</td>
             <td>
 
             <button 
@@ -115,9 +124,6 @@
             </tr>`;
         });
 
-        let controlesEditar = document.getElementsByClassName("btnEditar");
-        let controlesEliminar = document.getElementsByClassName("btnEliminar");
-
         for (var i = 0; i < listaRutas.length; ++i) {
             controlesEditar[i].onclick = editarRuta;
             controlesEliminar[i].onclick = eliminarRuta;
@@ -127,27 +133,27 @@
 
     const editarRuta = (e) => {
         let btnEditar = e.target;
-        let id = parseInt(btnEditar.dataset.id);
-        tempID = id - 1;
-        let route = buscarRuta(id);
+        let id = btnEditar.dataset.id;
+        let rutaE = listaRutas.find((rutaid) => rutaid._id == id);
+        tempID = rutaE._id;
 
-        ctp.value = route["ctp"];
-        ruta.value = route["ruta"];
+        ctp.value = route["CTP"];
+        ruta.value = route["nombreRuta"];
         provincia.value = route["provincia"];
         canton.value = route["canton"];
-        costo.value = route["costo"];
+        costo.value = route["precio"];
 
-        if (rutas.provincia == 0) {
+        if (rutas.provincia == 'San Jose') {
             provincia.value = 'San Jose';
-        } else if (rutas.provincia == 1) {
+        } else if (rutas.provincia == 'Heredia') {
             provincia.value = 'Heredia';
-        } else if (rutas.provincia == 2) {
+        } else if (rutas.provincia == 'Alajuela') {
             provincia.value = 'Alajuela';
-        } else if (rutas.provincia == 3) {
+        } else if (rutas.provincia == 'Cartago') {
             provincia.value = 'Cartago';
-        } else if (rutas.provincia == 4) {
+        } else if (rutas.provincia == 'Guanacaste') {
             provincia.value = 'Guanacaste';
-        } else if (rutas.provincia == 5) {
+        } else if (rutas.provincia == 'Puntarenas') {
             provincia.value = 'Puntarenas';
         } else {
             rolID.value = 'Limon';
@@ -160,11 +166,16 @@
 
     const eliminarRuta = (e) => {
         let btnEliminar = e.target;
-        let id = parseInt(btnEliminar.dataset.id);
-        let pos = id - 1;
-    
-        listaRutas.splice(pos, 1);
-    
+        let id = btnEliminar.dataset.id;
+        let rutaE = listaRutas.find((rutaid) => rutaid._id == id);
+
+        fetch(`${url}/rutas/${rutaE._id}`, {
+            method: "DELETE"
+        })
+            .then((res) => console.log(res))
+            .catch((error) => console.log(error));
+
+        fetchRutas();
         limpiarDatos();
         tabla();
     };

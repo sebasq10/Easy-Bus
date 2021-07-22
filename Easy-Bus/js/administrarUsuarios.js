@@ -7,12 +7,9 @@
     let usn = {};
     let contrasena = {};
     let contrasenaConf = {};
-    let usuarioID = {};
     let rolID = {};
-    let metodoPagoID = {};
     let btnAceptar = {};
     let btnLimpiar = {};
-    let lista = [];
     let tempID = {};
 
     const inicializar = async () => {
@@ -206,7 +203,6 @@
     const eliminarUsuario = (e) => {
         let btnEliminar = e.target;
         let id = btnEliminar.dataset.id;
-
         let user = listaUsuarios.find((user) => user._id == id);
 
         fetch(`${url}/usuarios/${user._id}`, {

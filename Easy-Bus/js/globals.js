@@ -26,6 +26,14 @@ const getBases = async () => {
     listaRoles = datos;
 };
 
+const fetchRutas = async () => {
+
+    let datos = await fetch(`${url}/rutas`)
+        .then((response) => response.json());
+
+    listaRutas = datos;
+};
+
 
 const getById = async (tabla, id) => {
     await sleep(5000);
