@@ -48,7 +48,7 @@
 
     const infoTarget = (e) => {
         const { name, value } = e.target;
-        console.log(name, ':', value)
+        //console.log(name, ':', value)
         usuario[name] = value;
     };
 
@@ -67,29 +67,44 @@
         if (btnAceptar.innerHTML === "Aceptar") {
             fetch(`${url}/usuarios`, {
                 headers: {
-                  Accept: "application/json",
-                  "Content-type": "application/json",
+                    Accept: "application/json",
+                    "Content-type": "application/json",
                 },
                 method: "POST",
                 body: JSON.stringify(usuario),
-              })
+            })
                 .then((res) => console.log(res))
                 .catch((error) => console.log(error));
         } else {
-            listaUsuario[tempID].nombre = nombre.value;
-            listaUsuario[tempID].apellido1 = primerA.value;
-            listaUsuario[tempID].apellido2 = segundoA.value;
-            listaUsuario[tempID].fechaNacimiento = nacimiento.value;
-            listaUsuario[tempID].usn = usn.value;
-            listaUsuario[tempID].contrasena = contrasena.value;
-            listaUsuario[tempID].rolID = rolID.value;
-            btnAceptar.innerHTML = "Aceptar";
-        }
 
+            let user = listaUsuarios.find((x) => x._id == tempID);
+
+            user.nombre = nombre.value;
+            user.pApellido = primerA.value;
+            user.sApellido = segundoA.value;
+            user.fechaNacimiento = nacimiento.value;
+            user.usuario = usn.value;
+            user.contrasena = contrasena.value;
+            user.rol = rolID.value;
+            btnAceptar.innerHTML = "Aceptar";
+
+            fetch(`${url}/usuarios/${tempID}`, {
+                headers: {
+                    Accept: "application/json",
+                    "Content-type": "application/json",
+                },
+                method: "PUT",
+                body: JSON.stringify(user),
+            })
+                .then((res) => console.log(res))
+                .catch((error) => console.log(error));
+        };
+
+        tempID = "";
         await getBases();
-        tabla();
+        await tabla();
         limpiarDatos();
-    };
+    }
 
     const limpiarDatos = () => {
         nombre.value = '';
@@ -115,14 +130,14 @@
         listaUsuarios.forEach(usuario => {
             let fondoDes = "";
             let rolUsuario = listaRoles.find((id) => id._id == usuario.rol);
-            let estado=""
+            let estado = "";
 
             if (usuario.estado == "Activo") {
                 fondoDes = "class= 'bg-white'";
-                estado= "Desactivar";
+                estado = "Desactivar";
             } else {
                 fondoDes = "class= 'bg-light'";
-                estado= "Activar";
+                estado = "Activar";
             }
 
             tbAdmin.innerHTML += `<tr ${fondoDes}>
@@ -156,7 +171,7 @@
 
             </tr>`;
         });
-       
+
         for (var i = 0; i < listaUsuarios.length; ++i) {
             controlesEditar[i].onclick = editarUsuario;
             controlesEliminar[i].onclick = eliminarUsuario;
@@ -169,6 +184,7 @@
         let btnEditar = e.target;
         let idBtn = btnEditar.dataset.id;
         let user = listaUsuarios.find((usnId) => usnId._id == idBtn);
+        tempID = user._id;
 
         nombre.value = user["nombre"];
         primerA.value = user["pApellido"];
@@ -215,4 +231,5 @@
     };
 
     inicializar();
-})();
+}
+)();
