@@ -51,6 +51,7 @@
         usuario[name] = value;
     };
 
+
     const crearUsuario = () => {
         usuario['metodoPagoID'] = 'NULL';
         usuario['usuarioID'] = listaUsuario.length + 1;
