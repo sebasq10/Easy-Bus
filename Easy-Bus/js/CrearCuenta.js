@@ -77,16 +77,16 @@
         }
 
         if (btnAceptar.innerHTML === "Aceptar") {
-            listaUsuario.push(Object.assign({}, usuario));
+            listaUsuarios.push(Object.assign({}, usuario));
         } else {
-            listaUsuario[tempID].nombre = nombre.value;
-            listaUsuario[tempID].apellido1 = primerA.value;
-            listaUsuario[tempID].apellido2 = segundoA.value;
-            listaUsuario[tempID].fechaNacimiento = nacimiento.value;
-            istaUsuario[tempID].correo = correo.value;
-            listaUsuario[tempID].usn = usn.value;
-            listaUsuario[tempID].contrasena = contrasena.value;
-            listaUsuario[tempID].rolID = rolID.value;
+            listaUsuarios[tempID].nombre = nombre.value;
+            listaUsuarios[tempID].apellido1 = primerA.value;
+            listaUsuarios[tempID].apellido2 = segundoA.value;
+            listaUsuarios[tempID].fechaNacimiento = nacimiento.value;
+            listaUsuarios[tempID].correo = correo.value;
+            listaUsuarios[tempID].usn = usn.value;
+            listaUsuarios[tempID].contrasena = contrasena.value;
+            listaUsuarios[tempID].rolID = rolID.value;
             tempID = -1;
             btnAceptar.innerHTML = "Aceptar";
         }

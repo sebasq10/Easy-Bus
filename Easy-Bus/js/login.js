@@ -13,7 +13,7 @@
 
         await fetchUsuarios();
     };
-
+    
     const validarUsuario = (e) => {
 
         let user = listaUsuarios.find(usu => usu.usuario == adminUser.value);
@@ -32,7 +32,5 @@
             window.alert("Usuario o contrasena incorrectos.");
         }
     };
-
-    inicializar();
-    
+    inicializar();   
 })();

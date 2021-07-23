@@ -48,19 +48,19 @@ const getById = async (tabla, id) => {
     return datos;
 };
 
-/* const buscarUsuario = (id) => {
+const buscarUsuario = (id) => {
     let userIndex = listaUsuarios.findIndex((usuario) => usuario.usuarioID === id);
-    return (userIndex !== -1) ? listaUsuario[userIndex] : null;
+    return (userIndex !== -1) ? listaUsuarios[userIndex] : null;
 };
 
 const buscarUserName = (usn) => {
-    let userIndex = listaUsuario.findIndex((usuario) => usuario.usn === usn);
-    return (userIndex !== -1) ? listaUsuario[userIndex] : null;
+    let userIndex = listaUsuarios.findIndex((usuario) => usuario.usn === usn);
+    return (userIndex !== -1) ? listaUsuarios[userIndex] : null;
 };
 
 const buscarCorreo = (correo) => {
-    let userIndex = listaUsuario.findIndex((usuario) => usuario.correo === correo);
-    return (userIndex !== -1) ? listaUsuario[userIndex] : null;
+    let userIndex = listaUsuarios.findIndex((usuario) => usuario.correo === correo);
+    return (userIndex !== -1) ? listaUsuarios[userIndex] : null;
 };
 
 const buscarRuta = (id) => {
@@ -71,4 +71,4 @@ const buscarRuta = (id) => {
 const buscarCtp = (ctp) => {
     let rutaIndex = listaRutas.findIndex((rutas) => rutas.ctp === ctp);
     return (rutaIndex !== -1) ? listaRutas[rutaIndex] : null;
-};*/
+};
