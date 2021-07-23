@@ -13,7 +13,6 @@
     let metodoPagoID = {};
     let btnAceptar = {};
     let btnLimpiar = {};
-
     let tempID = {};
 
     const inicializar = () => {

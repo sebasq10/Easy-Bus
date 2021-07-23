@@ -77,4 +77,4 @@ const buscarRuta = (id) => {
 const buscarCtp = (ctp) => {
     let rutaIndex = listaRutas.findIndex((rutas) => rutas.ctp === ctp);
     return (rutaIndex !== -1) ? listaRutas[rutaIndex] : null;
-};*/
+};
