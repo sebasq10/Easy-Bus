@@ -19,29 +19,23 @@ const sleep = (mili) => {
  * Hace fetch a las bases de datos y lo guarda en el arreglo correspondiente
  */
 const fetchUsuarios = async () => {
-
     let datos = await fetch(`${url}/usuarios`)
         .then((response) => response.json());
     listaUsuarios = datos;
 };
 
 const fetchRoles = async () => {
-
     let datos = await fetch(`${url}/roles`)
         .then((response) => response.json());
-
     listaRoles = datos;
 };
 
-
 const fetchRutas = async () => {
-
     let datos = await fetch(`${url}/rutas`)
         .then((response) => response.json());
 
     listaRutas = datos;
 };
-
 
 const getById = async (tabla, id) => {
     await sleep(5000);
@@ -77,4 +71,4 @@ const buscarRuta = (id) => {
 const buscarCtp = (ctp) => {
     let rutaIndex = listaRutas.findIndex((rutas) => rutas.ctp === ctp);
     return (rutaIndex !== -1) ? listaRutas[rutaIndex] : null;
-};
+};*/

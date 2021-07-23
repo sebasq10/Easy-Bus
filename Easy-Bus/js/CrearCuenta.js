@@ -53,7 +53,7 @@
 
     const crearUsuario = () => {
         usuario['metodoPagoID'] = 'NULL';
-        usuario['usuarioID'] = listaUsuario.length + 1;
+        usuario['usuarioID'] = listaUsuarios.length + 1;
 
         if(nombre.value === "" || primerA.value === "" || segundoA.value === "" || nacimiento.value === "" 
         || correo.value === "" || usn.value === "" || contrasena.value === "" || contrasenaConf.value === ""){
