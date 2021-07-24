@@ -1,47 +1,44 @@
 (function () {
 
-    let nombre = {};
-    let primerA = {};
-    let segundoA = {};
-    let nacimiento = {};
-    let correo = {};
-    let usn = {};
+    let usuario = {};
     let contrasena = {};
-    let contrasenaConf = {};
-    let usuarioID = {};
-    let rolID = {};
-    let metodoPagoID = {};
+    let nombre = {};
+    let pApellido = {};
+    let sApellido = {};
+    let fechaNacimiento = {};
+    let rol = {};
+    let metodoPago = {};
+    let estado = {};
     let btnAceptar = {};
     let btnLimpiar = {};
-    let tempID = {};
 
-    const inicializar = () => {
-        nombre = document.querySelector('#nombre');
-        primerA = document.querySelector('#apellido1');
-        segundoA = document.querySelector('#apellido2');
-        nacimiento = document.querySelector('#fechaNacimiento');
-        correo = document.querySelector('#correo');
-        usn = document.querySelector('#usn');
-        contrasena = document.querySelector('#contrasenia');
+    const inicializar = async () => {
+        usuario = document.querySelector('#usuario');
+        contrasena = document.querySelector('#contrasena');
         contrasenaConf = document.querySelector('#contrasenaConf');
-        rolID = "2";
+        nombre = document.querySelector('#nombre');
+        pApellido = document.querySelector('#pApellido');
+        sApellido = document.querySelector('#sApellido');
+        fechaNacimiento = document.querySelector('#fechaNacimiento');
+        rol = "60fa55ffed155caf2d9cd502"; //_ID Cliente
+        estado = "Activo";
         btnAceptar = document.querySelector('#btnAceptar');
         btnLimpiar = document.querySelector('#btnLimpiar');
         btnAceptar.onclick = crearUsuario;
         btnLimpiar.onclick = limpiarDatos;
+        await fetchUsuarios();
+        bind();
     };
 
     const bind = () => {
-        nombre.onchange = infoTarget;
-        nombre.onchange = infoTarget;
-        primerA.onchange = infoTarget;
-        segundoA.onchange = infoTarget;
-        nacimiento.onchange = infoTarget;
-        correo.onchange = infoTarget;
-        usn.onchange = infoTarget;
+        usuario.onchange = infoTarget;
         contrasena.onchange = infoTarget;
-        contrasenaConf.onchange = infoTarget;
-        rolID.onchange = infoTarget;
+        nombre.onchange = infoTarget;
+        pApellido.onchange = infoTarget;
+        sApellido.onchange = infoTarget;
+        fechaNacimiento.onchange = infoTarget;
+        rol = infoTarget;
+        estado = infoTarget;
     };
 
     const infoTarget = (e) => {
@@ -51,32 +48,39 @@
     };
 
 
-    const crearUsuario = () => {
+    const crearUsuario = async () => {
+        let userTemp = listaUsuarios.find(usn => usn.usuario == usuario.value);
         usuario['metodoPagoID'] = 'NULL';
         usuario['usuarioID'] = listaUsuarios.length + 1;
 
-        if(nombre.value === "" || primerA.value === "" || segundoA.value === "" || nacimiento.value === "" 
-        || correo.value === "" || usn.value === "" || contrasena.value === "" || contrasenaConf.value === ""){
+        if(nombre.value === "" || pApellido.value === "" || sApellido.value === "" || fechaNacimiento.value === "" 
+        || usuario.value === "" || contrasena.value === "" || contrasenaConf.value === ""){
             window.alert("Por favor rellenar todos los campos.");
             return;
         }
 
-        if(buscarUserName(usn.value) !== null){
+
+        if(userTemp.usuario === usuario.value ){
             window.alert("El usuario ya existe. Utilice otro.");
             return;
         }
 
-        if(buscarCorreo(correo.value) !== null){
-            window.alert("El correo ya se encuenta registrado.");
-            return;
-        }
-
-        if(contrasenia.value !== contrasenaConf.value){
+        if(contrasena.value !== contrasenaConf.value){
             window.alert("La confirmación de contraseña es diferente. ");
             return;
         }
 
-        if (btnAceptar.innerHTML === "Aceptar") {
+        fetch(`${url}/usuarios`, {
+            headers: {
+                Accept: "application/json",
+                "Content-type": "application/json",
+            },
+            method: "POST",
+            body: JSON.stringify(usuario),
+        })
+            .then((res) => console.log(res))
+            .catch((error) => console.log(error));
+        /*if (btnAceptar.innerHTML === "Aceptar") {
             listaUsuarios.push(Object.assign({}, usuario));
         } else {
             listaUsuarios[tempID].nombre = nombre.value;
@@ -89,20 +93,18 @@
             listaUsuarios[tempID].rolID = rolID.value;
             tempID = -1;
             btnAceptar.innerHTML = "Aceptar";
-        }
+        }*/
         limpiarDatos();
     };
 
     const limpiarDatos = () => {
         nombre.value = '';
-        primerA.value = '';
-        segundoA.value = '';
-        nacimiento.value = '';
-        correo.value = '';
-        usn.value = '';
+        pApellido.value = '';
+        sApellido.value = '';
+        fechaNacimiento.value = '';
+        usuario.value = '';
         contrasena.value = '';
         contrasenaConf.value = '';
-        rolID.value = 'Seleccione una opcion';
     };
 
     inicializar();

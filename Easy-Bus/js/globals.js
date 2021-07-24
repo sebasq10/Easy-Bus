@@ -1,6 +1,7 @@
 let listaUsuarios = [];
 let listaRutas = [];
 let listaRoles = [];
+let listaMonederos = [];
 const usuario = {};
 const rutas = {};
 
@@ -35,6 +36,13 @@ const fetchRutas = async () => {
         .then((response) => response.json());
 
     listaRutas = datos;
+};
+
+const fetchMonederos = async () => {
+    let datos = await fetch(`${url}/monederos`)
+        .then((response) => response.json());
+
+    listaMonederos = datos;
 };
 
 const getById = async (tabla, id) => {

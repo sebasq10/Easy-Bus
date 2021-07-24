@@ -32,7 +32,6 @@
 
     const bind = () => {
         nombre.onchange = infoTarget;
-        nombre.onchange = infoTarget;
         primerA.onchange = infoTarget;
         segundoA.onchange = infoTarget;
         nacimiento.onchange = infoTarget;
@@ -66,6 +65,11 @@
         */
        
         if (btnAceptar.innerHTML === "Aceptar") {
+            let userTemp = listaUsuarios.find(us => us.usuario == usn.value);
+            if(typeof(userTemp) != "undefined"){
+                window.alert("El usuario ya existe. Utilice otro.");
+                return;
+            }
             fetch(`${url}/usuarios`, {
                 headers: {
                     Accept: "application/json",
@@ -106,6 +110,7 @@
         fetchRoles()
         tabla();
         limpiarDatos();
+        location.reload();
     }
 
     const limpiarDatos = () => {
@@ -117,6 +122,7 @@
         contrasena.value = '';
         contrasenaConf.value = '';
         rolID.value = 'Seleccione una opcion';
+        location.reload();
     };
 
     const tabla = () => {
@@ -194,9 +200,9 @@
         fechaNacimiento.value = user["fechaNacimiento"];
         usn.value = user["usuario"];
 
-        if (user["rol"] == "60f849fb3eff242d77c9dece") {
+        if (user["rol"] == "60f7a42e3d44fc667cf69271") { /*_id admin*/
             rolID.value = 'Administrador';
-        } else if (user["rolID"] == "60f849fe3eff242d77c9ded0") {
+        } else if (user["rolID"] == "60fb669504a51653a46a6540") { /*_id chofer*/
             rolID.value = 'Chofer';
         } else {
             rolID.value = 'Cliente';
@@ -219,6 +225,7 @@
         fetchUsuarios();
         limpiarDatos();
         tabla();
+        location.reload();
     };
 
     const cambiarEstado = (e) => {
@@ -247,6 +254,7 @@
 
         fetchUsuarios();
         tabla();
+        location.reload();
     };
 
     inicializar();

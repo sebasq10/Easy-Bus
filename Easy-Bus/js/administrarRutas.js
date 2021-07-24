@@ -31,19 +31,19 @@
 
     const infoTarget = (e) => {
         const { name, value } = e.target;
-        //console.log(name, ':', value)
         rutas[name] = value;
     };
 
     const crearRuta = async () => {
-        rutas['rutaID'] = listaRutas.length + 1;
-
-        /*  if (buscarCtp(ctp.value) !== null) {
-             window.alert("El CTP ya existe. Utilice otro.");
-             return;
-         } */
-
+        //rutas['rutaID'] = listaRutas.length + 1;
+        document.getElementById('btnLimpiar').style.visibility = 'visible';
+        
         if (btnAceptar.innerHTML === "Aceptar") {
+            let rutaTemp = listaRutas.find(rt => rt.CTP == ctp.value);
+            if (typeof(rutaTemp) != "undefined"){
+                window.alert("El CTP ya existe. Utilice otro.");
+                return;
+            }
             fetch(`${url}/rutas`, {
                 headers: {
                     Accept: "application/json",
@@ -56,13 +56,13 @@
                 .catch((error) => console.log(error));
         } else {
 
-            let ruta = listaRutas.find((x) => x._id == tempID);
+            let rutas = listaRutas.find((x) => x._id == tempID);
 
-            ruta.CTP = ctp.value;
-            ruta.nombreRuta = ruta.value;
-            ruta.provincia = provincia.value;
-            ruta.canton = canton.value;
-            ruta.precio = costo.value;
+            rutas.CTP = ctp.value;
+            rutas.nombreRuta = ruta.value;
+            rutas.provincia = provincia.value;
+            rutas.canton = canton.value;
+            rutas.precio = costo.value;
             btnAceptar.innerHTML = "Aceptar";
 
             fetch(`${url}/rutas/${tempID}`, {
@@ -71,7 +71,7 @@
                     "Content-type": "application/json",
                 },
                 method: "PUT",
-                body: JSON.stringify(ruta),
+                body: JSON.stringify(rutas),
             })
                 .then((res) => console.log(res))
                 .catch((error) => console.log(error));
@@ -81,14 +81,17 @@
         await fetchRutas();
         tabla();
         limpiarDatos();
+        location.reload();
     };
 
     const limpiarDatos = () => {
+        btnAceptar.innerHTML = "Aceptar";
         ctp.value = '';
         ruta.value = '';
         provincia.value = 'Seleccione una opcion';
         canton.value = '';
         costo.value = '';
+        tabla();
     };
 
     const tabla = () => {
@@ -128,7 +131,6 @@
             controlesEditar[i].onclick = editarRuta;
             controlesEliminar[i].onclick = eliminarRuta;
         }
-
     };
 
     const editarRuta = (e) => {
@@ -145,6 +147,8 @@
         provincia.value = rutaE.provincia;
 
         btnAceptar.innerHTML = "Modificar";
+        document.getElementById('btnLimpiar').style.visibility = 'hidden';
+        tabla();
     };
 
     const eliminarRuta = async (e) => {
@@ -161,8 +165,7 @@
         await fetchRutas();
         limpiarDatos();
         tabla();
+        location.reload();
     };
-
     inicializar();
-
 })();
