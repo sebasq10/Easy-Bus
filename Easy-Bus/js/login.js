@@ -31,9 +31,9 @@
             return;
         }
         if (user.usuario === adminUser.value && adminPass.value === user.contrasena) {
-            if(user.rol ==="60f7a42e3d44fc667cf69271"){ /*_id admin*/
+            if(user.rol ==="60f849fb3eff242d77c9dece"){ /*_id admin*/
                 window.location = "./usuariosAdmin.html";
-            }else if (user.rol ==="60fa55ffed155caf2d9cd502") { /*_id Cliente*/
+            }else if (user.rol ==="60f84a033eff242d77c9ded2") { /*_id Cliente*/
                 window.location = "./indexCliente.html";
             }else{
                 window.location = "./indexChofer.html";

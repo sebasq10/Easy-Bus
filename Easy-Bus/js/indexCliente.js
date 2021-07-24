@@ -12,12 +12,15 @@
 
         btnRecargar.onclick = validarMonto;
         await fetchMonederos();
+        await fetchUsuarios();
         mostrar_monedero();
 
     };
 
+
     const mostrar_monedero = () => {
-        let monederoTemp = listaMonederos.find(mo => mo.usuarioId == "60fb784ea3320c1bcc5a7565");
+        //let userTemp= listaUsuariosfind(u => u.usuario == )
+        let monederoTemp = listaMonederos.find(mo => mo.usuarioId == "60fc25d6aca78656f6105068");
         monedero.value= monederoTemp.cantidadDinero
     }
 
@@ -27,7 +30,7 @@
             window.alert("Por favor ingresar un monto valido.");
             return;
         }
-        let monederoTemp = listaMonederos.find(mo => mo.usuarioId == "60fb784ea3320c1bcc5a7565"); //Usuario ID Sebas
+        let monederoTemp = listaMonederos.find(mo => mo.usuarioId == "60fc25d6aca78656f6105068"); //Usuario ID Sebas
         tempID = monederoTemp._id;
         monederoTemp.cantidadDinero = monederoTemp.cantidadDinero + parseInt(montoRecarga.value);
         fetch(`${url}/monederos/${tempID}`, {

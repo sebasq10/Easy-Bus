@@ -50,21 +50,14 @@
     };
 
     const crearUsuario = async () => {
-        let existe = listaUsuarios.find((usu) => usu.usuario == usn.value);
-
-        /*
-        if (existe !== null) {
-            window.alert("El usuario ya existe. Utilice otro.");
-            return;
-        }
 
         if (contrasena.value !== contrasenaConf.value) {
             window.alert("La confirmación de contraseña es diferente. ");
             return;
         } 
-        */
        
         if (btnAceptar.innerHTML === "Aceptar") {
+            
             let userTemp = listaUsuarios.find(us => us.usuario == usn.value);
             if(typeof(userTemp) != "undefined"){
                 window.alert("El usuario ya existe. Utilice otro.");
@@ -200,14 +193,14 @@
         fechaNacimiento.value = user["fechaNacimiento"];
         usn.value = user["usuario"];
 
-        if (user["rol"] == "60f7a42e3d44fc667cf69271") { /*_id admin*/
+        if (user["rol"] == "60f849fb3eff242d77c9dece") { /*_id admin*/
             rolID.value = 'Administrador';
-        } else if (user["rolID"] == "60fb669504a51653a46a6540") { /*_id chofer*/
+        } else if (user["rolID"] == "60f849fe3eff242d77c9ded0") { /*_id chofer*/
             rolID.value = 'Chofer';
         } else {
             rolID.value = 'Cliente';
         }
-
+        
         btnAceptar.innerHTML = "Modificar";
     };
 
