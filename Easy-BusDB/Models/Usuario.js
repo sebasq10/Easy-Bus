@@ -37,11 +37,16 @@ const usuarioSchema = new Schema({
     },
     rol: {
         type: ObjectId,
-        ref: "Rol",
+        ref: "Roles",
         required: true
     },
-    metodoPago: { //ObjectID
-        type: String
+    ruta:{
+        type: ObjectId,
+        ref: "Rutas"
+    },
+    metodoPago: { 
+        type: ObjectId,
+        ref: "Monederos"
     },
     estado: {
         type: String,
