@@ -31,6 +31,7 @@
             return;
         }
         if (user.usuario === adminUser.value && adminPass.value === user.contrasena) {
+            guardarSesion(user.usuario,user.contrasena);           
             if(user.rol ==="60f849fb3eff242d77c9dece"){ /*_id admin*/
                 window.location = "./usuariosAdmin.html";
             }else if (user.rol ==="60f84a033eff242d77c9ded2") { /*_id Cliente*/

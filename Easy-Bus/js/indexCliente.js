@@ -25,27 +25,32 @@
     }
 
     const validarMonto = (e) => {
-
-        if (montoRecarga.value === "" || montoRecarga.value <= 0) {
-            window.alert("Por favor ingresar un monto valido.");
-            return;
+        if (validarSesion()==true) {
+            if (montoRecarga.value === "" || montoRecarga.value <= 0) {
+                window.alert("Por favor ingresar un monto valido.");
+                return;
+            }
+            let monederoTemp = listaMonederos.find(mo => mo.usuarioId == "60fc25d6aca78656f6105068"); //Usuario ID Sebas
+            tempID = monederoTemp._id;
+            monederoTemp.cantidadDinero = monederoTemp.cantidadDinero + parseInt(montoRecarga.value);
+            fetch(`${url}/monederos/${tempID}`, {
+                headers: {
+                    Accept: "application/json",
+                    "Content-type": "application/json",
+                },
+                method: "PUT",
+                body: JSON.stringify(monederoTemp),
+            })
+                .then((res) => console.log(res))
+                .catch((error) => console.log(error));
+            mostrar_monedero();
+            window.alert("Monto Recargado");
+            limpiar();
         }
-        let monederoTemp = listaMonederos.find(mo => mo.usuarioId == "60fc25d6aca78656f6105068"); //Usuario ID Sebas
-        tempID = monederoTemp._id;
-        monederoTemp.cantidadDinero = monederoTemp.cantidadDinero + parseInt(montoRecarga.value);
-        fetch(`${url}/monederos/${tempID}`, {
-            headers: {
-                Accept: "application/json",
-                "Content-type": "application/json",
-            },
-            method: "PUT",
-            body: JSON.stringify(monederoTemp),
-        })
-            .then((res) => console.log(res))
-            .catch((error) => console.log(error));
-        mostrar_monedero();
-        window.alert("Monto Recargado");
-        limpiar();
+        else{
+            window.alert("Por favor vuelva a ingresar sus datos de inicio de sesion.");
+            window.location = "./login.html";
+        }
         };
 
     const limpiar = () =>{

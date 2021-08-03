@@ -2,8 +2,11 @@ let listaUsuarios = [];
 let listaRutas = [];
 let listaRoles = [];
 let listaMonederos = [];
+let idlogin = {};
+let clvlogin = {};
 const usuario = {};
 const rutas = {};
+
 
 const url = `http://localhost:5000`;
 
@@ -79,4 +82,27 @@ const buscarRuta = (id) => {
 const buscarCtp = (ctp) => {
     let rutaIndex = listaRutas.findIndex((rutas) => rutas.ctp === ctp);
     return (rutaIndex !== -1) ? listaRutas[rutaIndex] : null;
+};
+/*** SESION STORAGE ***/
+
+function guardarSesion(idUser, claveUser){   
+    sessionStorage.setItem(idUser, claveUser);
+};
+const validarSesion = () =>{
+    let user = listaUsuarios.find(usu => usu.usuario == sessionStorage.key(0));
+    if (sessionStorage.key(0) == user.usuario && sessionStorage.getItem(sessionStorage.key(0)) == user.contrasena) {
+        return true;
+      } else if(sessionStorage.key(0) != user.usuario || sessionStorage.getItem(sessionStorage.key(0))!=user.contrasena) {
+            return false;
+      } else {
+        window.alert("Sorry, your browser does not support Web Storage...");
+     }
+};
+
+function salirSesion(idUser, claveUser){   
+    sessionStorage.clear();
+    idlogin="";
+    clvlogin=""; 
+    window.alert("Gracias por su visita.");
+    window.location.href = "login.html";
 };
