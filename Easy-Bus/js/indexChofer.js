@@ -19,6 +19,9 @@
     };
 
     const validarMonto = (e) => {
+
+        let userTemp = listaUsuarios.find(usn => usn.usuario == pasajero.value);
+
         if (cantPasajero.value === "" || cantPasajero.value === 0) {
             window.alert("Por favor ingresar la cantidad de pasajeros a cobrar.");
             return;
@@ -35,55 +38,64 @@
             window.alert("Por favor ingresar un costo válido.");
             return;
         }
-        let userTemp = listaUsuarios.find(usn => usn.usuario == pasajero.value);
-        if (typeof userTemp === 'undefined'){
+
+        if (typeof userTemp === 'undefined') {
             window.alert("El usuario no existe. Intente de nuevo.");
             return;
         }
-        else if(userTemp.usuario === pasajero.value ){
-            if(userTemp.estado === "Inactivo"){
+        else if (userTemp.usuario === pasajero.value) {
+
+            if (userTemp.estado === "Inactivo") {
                 window.alert("Usuario Inactivo");
                 return;
             }
-            let monederoTemp = listaMonederos.find(mo => mo.usuarioId == userTemp._id); //Usuario ID Sebas
+
+            let monederoTemp = listaMonederos.find(mo => mo.usuarioId == userTemp._id);
             tempID = monederoTemp._id;
-            monederoTemp.cantidadDinero = monederoTemp.cantidadDinero - (parseInt(costoRuta.value)*parseInt(cantPasajero.value));
-            if (monederoTemp.cantidadDinero <= 0){
+            monederoTemp.cantidadDinero = monederoTemp.cantidadDinero - (parseInt(costoRuta.value) * parseInt(cantPasajero.value));
+
+            //Transaccion fallida
+            if (monederoTemp.cantidadDinero <= 0) {
                 window.alert("Fondos Insuficientes. Transacción cancelada")
+                //se registra transaccion
+                fetch(`${url}/monederos/${tempID}`, {
+                    headers: {
+                        Accept: "application/json",
+                        "Content-type": "application/json",
+                    },
+                    method: "POST",
+                    body: JSON.stringify(monederoTemp),
+                })
+                    .then((res) => console.log(res))
+                    .catch((error) => console.log(error));
                 location.reload();
                 return;
             }
+
+            //transaccion exitosa
             fetch(`${url}/monederos/${tempID}`, {
                 headers: {
                     Accept: "application/json",
                     "Content-type": "application/json",
                 },
-                method: "PUT",
+                method: "POST",
                 body: JSON.stringify(monederoTemp),
             })
                 .then((res) => console.log(res))
                 .catch((error) => console.log(error));
+
             limpiar();
             window.alert("Transacción Exitosa");
             return;
         }
-
-         /*if (getById("usuarios", pasajero.value) === null) {
-            window.alert("Cliente no existe");
-            return;
-        }if (getById("usuarios", pasajero.value).saldo <= 0){
-            window.alert("Cliente sin saldo suficiente");
-            return;
-        }
-         */
     };
 
-    const limpiar = () =>{
+    const limpiar = () => {
         cantPasajero.value = "";
         pasajero.value = "";
         costoRuta.value = "";
     }
 
     inicializar();
-    
+
 })();
