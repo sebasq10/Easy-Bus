@@ -107,8 +107,6 @@ const validarSesion = () =>{
 
 function salirSesion(idUser, claveUser){   
     sessionStorage.clear();
-    idlogin="";
-    clvlogin=""; 
     window.alert("Gracias por su visita.");
     window.location.href = "login.html";
 };
