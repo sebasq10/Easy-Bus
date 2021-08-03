@@ -8,6 +8,7 @@
     let contrasena = {};
     let contrasenaConf = {};
     let rolID = {};
+    let ruta = {};
     let btnAceptar = {};
     let btnLimpiar = {};
     let tempID = {};
@@ -21,10 +22,17 @@
         contrasena = document.querySelector('#contrasena');
         contrasenaConf = document.querySelector('#contrasenaConf');
         rolID = document.querySelector('#rol');
+        ruta = document.querySelector('#ruta');
         btnAceptar = document.querySelector('#btnAceptar');
         btnLimpiar = document.querySelector('#btnLimpiar');
-        await fetchUsuarios();
+
+        //trae los datos de las bases de datos
         await fetchRoles();
+        await fetchRutas();
+        await fetchUsuarios();
+
+        rellenarRol();
+        rellenarRutas();
         bind();
         tabla();
     };
@@ -39,13 +47,14 @@
         contrasena.onchange = infoTarget;
         contrasenaConf.onchange = infoTarget;
         rolID.onchange = infoTarget;
+        ruta.onchange = infoTarget;
         btnAceptar.onclick = crearUsuario;
         btnLimpiar.onclick = limpiarDatos;
     };
 
     const infoTarget = (e) => {
         const { name, value } = e.target;
-        //console.log(name, ':', value)
+        console.log(name, ':', value)
         usuario[name] = value;
     };
 
@@ -54,12 +63,12 @@
         if (contrasena.value !== contrasenaConf.value) {
             window.alert("La confirmación de contraseña es diferente. ");
             return;
-        } 
-       
+        }
+
         if (btnAceptar.innerHTML === "Aceptar") {
-            
+
             let userTemp = listaUsuarios.find(us => us.usuario == usn.value);
-            if(typeof(userTemp) != "undefined"){
+            if (typeof (userTemp) != "undefined") {
                 window.alert("El usuario ya existe. Utilice otro.");
                 return;
             }
@@ -114,7 +123,7 @@
         usn.value = '';
         contrasena.value = '';
         contrasenaConf.value = '';
-        rolID.value = 'Seleccione una opcion';
+        rolID.text = 'Seleccione una opcion';
         location.reload();
     };
 
@@ -131,6 +140,8 @@
         listaUsuarios.forEach(usuario => {
             let fondoDes = "";
             let rolUsuario = listaRoles.find((id) => id._id == usuario.rol);
+            let rutaUsuario = listaRutas.find((id)=> id._id== usuario.ruta);
+            
             let estado = "";
 
             if (usuario.estado == "Activo") {
@@ -149,7 +160,7 @@
             <td>${usuario.sApellido}</td>
             <td>${usuario.fechaNacimiento}</td>
             <td>${rolUsuario.tipoRol}</td>
-            <td>${usuario.metodoPago}</td>
+            <td>${rutaUsuario.nombreRuta}</td>
             <td>${usuario.estado}</td>
             <td>
 
@@ -200,7 +211,7 @@
         } else {
             rolID.value = 'Cliente';
         }
-        
+
         btnAceptar.innerHTML = "Modificar";
     };
 
@@ -250,6 +261,24 @@
         location.reload();
     };
 
+    const rellenarRol = () => {
+
+        listaRoles.forEach(rol => {
+            var opt = document.createElement("option"); // Create the new element
+            opt.value = rol._id; // valor de opcion
+            opt.text = rol.tipoRol; // texto de opcion
+            rolID.appendChild(opt);
+        })
+    };
+
+    const rellenarRutas = () => {
+        listaRutas.forEach(r => {
+            var opt = document.createElement("option"); // Create the new element
+            opt.value = r._id; // valor de opcion
+            opt.text = r.nombreRuta; // texto de opcion
+            ruta.appendChild(opt);
+        })
+    };
     inicializar();
 }
 )();

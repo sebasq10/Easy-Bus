@@ -83,12 +83,12 @@
          */
     };
 
-    const limpiar = () =>{
+    const limpiar = () => {
         cantPasajero.value = "";
         pasajero.value = "";
         costoRuta.value = "";
     }
 
     inicializar();
-    
+
 })();

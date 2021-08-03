@@ -5,6 +5,7 @@ const usuarioController = require('../Controllers/usuarioControllers');
 const rolController = require('../Controllers/rolControllers');
 const rutasController = require('../Controllers/rutaControllers');
 const monederoController = require('../Controllers/monederoControllers');
+const transaccionController = require('../Controllers/monederoControllers');
 
 
 module.exports = function () {
@@ -36,6 +37,13 @@ module.exports = function () {
     router.post('/monederos', monederoController.agregar)
     router.put('/monederos/:id', monederoController.actualizar)
     router.delete('/monederos/:id', monederoController.eliminar)
-    
+
+    //transacciones
+    router.get('/transacciones', transaccionController.getLista)
+    router.get('/transacciones/:id', transaccionController.getById)
+    router.post('/transacciones', transaccionController.agregar)
+    router.put('/transacciones/:id', transaccionController.actualizar)
+    router.delete('/transacciones/:id', transaccionController.eliminar)
+
     return router;
 }

@@ -40,11 +40,11 @@ const usuarioSchema = new Schema({
         ref: "Roles",
         required: true
     },
-    ruta:{
+    ruta: {
         type: ObjectId,
         ref: "Rutas"
     },
-    metodoPago: { 
+    metodoPago: {
         type: ObjectId,
         ref: "Monederos"
     },

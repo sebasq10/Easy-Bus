@@ -2,10 +2,9 @@ let listaUsuarios = [];
 let listaRutas = [];
 let listaRoles = [];
 let listaMonederos = [];
-let idlogin = {};
-let clvlogin = {};
 const usuario = {};
 const rutas = {};
+const transacciones = {};
 
 
 const url = `http://localhost:5000`;
@@ -46,6 +45,13 @@ const fetchMonederos = async () => {
         .then((response) => response.json());
 
     listaMonederos = datos;
+};
+
+const fetchTransacciones = async () => {
+    let datos = await fetch(`${url}/transacciones`)
+        .then((response) => response.json());
+
+    listaTransacciones = datos;
 };
 
 const getById = async (tabla, id) => {
