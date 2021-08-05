@@ -91,7 +91,7 @@ const buscarCtp = (ctp) => {
 };
 /*** SESION STORAGE ***/
 
-function guardarSesion(idUser, claveUser){   
+function guardarSesion(idUser, claveUser){  
     sessionStorage.setItem(idUser, claveUser);
 };
 const validarSesion = () =>{
@@ -110,3 +110,41 @@ function salirSesion(idUser, claveUser){
     window.alert("Gracias por su visita.");
     window.location.href = "login.html";
 };
+
+/*** COKIES ***/
+function setCookie(cname, cvalue, exdays) {
+    const d = new Date();
+    d.setTime(d.getTime() + (exdays));
+    let expires = "expires="+d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  }
+  
+  function getCookie(cname) {
+    let name = cname + "=";
+    let ca = document.cookie.split(';');
+    for(let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }
+  
+  function checkCookie() {
+    let user = getCookie("username");
+    if (user != "") {
+      alert("Welcome again " + user);
+    } else {
+      user = prompt("Please enter your name:", "");
+      if (user != "" && user != null) {
+        setCookie("username", user, 365);
+      }
+    }
+  }
+  function deleteCookie() {
+    document.cookie = "nombre=; max-age=0";
+  }
