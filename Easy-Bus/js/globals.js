@@ -96,6 +96,11 @@ function guardarSesion(idUser, claveUser){
 };
 const validarSesion = () =>{
     let user = listaUsuarios.find(usu => usu.usuario == sessionStorage.key(0));
+    if (typeof (user) == "undefined") {
+        window.alert("Por favor vuelva a ingresar sus datos de inicio de sesion.");
+        window.location = "./login.html";
+        return;
+    }
     if (sessionStorage.key(0) == user.usuario && sessionStorage.getItem(sessionStorage.key(0)) == user.contrasena) {
         return true;
       } else if(sessionStorage.key(0) != user.usuario || sessionStorage.getItem(sessionStorage.key(0))!=user.contrasena) {
@@ -111,40 +116,3 @@ function salirSesion(idUser, claveUser){
     window.location.href = "login.html";
 };
 
-/*** COKIES ***/
-function setCookie(cname, cvalue, exdays) {
-    const d = new Date();
-    d.setTime(d.getTime() + (exdays));
-    let expires = "expires="+d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-  }
-  
-  function getCookie(cname) {
-    let name = cname + "=";
-    let ca = document.cookie.split(';');
-    for(let i = 0; i < ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) == ' ') {
-        c = c.substring(1);
-      }
-      if (c.indexOf(name) == 0) {
-        return c.substring(name.length, c.length);
-      }
-    }
-    return "";
-  }
-  
-  function checkCookie() {
-    let user = getCookie("username");
-    if (user != "") {
-      alert("Welcome again " + user);
-    } else {
-      user = prompt("Please enter your name:", "");
-      if (user != "" && user != null) {
-        setCookie("username", user, 365);
-      }
-    }
-  }
-  function deleteCookie() {
-    document.cookie = "nombre=; max-age=0";
-  }

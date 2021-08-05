@@ -20,8 +20,11 @@
 
     const mostrar_monedero = () => {
         //let userTemp= listaUsuariosfind(u => u.usuario == )
-        let monederoTemp = listaMonederos.find(mo => mo.usuarioId == "60fc25d6aca78656f6105068");
-        monedero.value= monederoTemp.cantidadDinero
+        if (validarSesion()==true) {
+            let usuarioTemp = listaUsuarios.find(us => us.usuario == sessionStorage.key(0));
+            let monederoTemp = listaMonederos.find(mo => mo.usuarioId == usuarioTemp._id);
+            monedero.value= monederoTemp.cantidadDinero
+        }
     }
 
     const validarMonto = (e) => {
@@ -30,7 +33,8 @@
                 window.alert("Por favor ingresar un monto valido.");
                 return;
             }
-            let monederoTemp = listaMonederos.find(mo => mo.usuarioId == "60fc25d6aca78656f6105068"); //Usuario ID Sebas
+            let usuarioTemp = listaUsuarios.find(us => us.usuario == sessionStorage.key(0));
+            let monederoTemp = listaMonederos.find(mo => mo.usuarioId == usuarioTemp._id);            
             tempID = monederoTemp._id;
             monederoTemp.cantidadDinero = monederoTemp.cantidadDinero + parseInt(montoRecarga.value);
             fetch(`${url}/monederos/${tempID}`, {
@@ -46,10 +50,6 @@
             mostrar_monedero();
             window.alert("Monto Recargado");
             limpiar();
-        }
-        else{
-            window.alert("Por favor vuelva a ingresar sus datos de inicio de sesion.");
-            window.location = "./login.html";
         }
         };
 

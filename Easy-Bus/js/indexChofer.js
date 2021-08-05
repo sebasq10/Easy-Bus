@@ -19,6 +19,7 @@
 
     const validarMonto = (e) => {
         if (validarSesion()==true) {
+            console.log(sessionStorage.key(0), sessionStorage.getItem(sessionStorage.key(0)));
             if (cantPasajero.value === "" || cantPasajero.value === 0) {
                 window.alert("Por favor ingresar la cantidad de pasajeros a cobrar.");
                 return;
@@ -67,9 +68,6 @@
                 window.alert("Transacción Exitosa");
                 return;
             }
-        }else{
-            window.alert("Por favor vuelva a ingresar sus datos de inicio de sesion.");
-            window.location = "./login.html";
         }
         
 
