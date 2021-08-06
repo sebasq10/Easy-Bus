@@ -31,8 +31,10 @@
         await fetchRutas();
         await fetchUsuarios();
 
+        //rellena combo Boxes
         rellenarRol();
         rellenarRutas();
+
         bind();
         tabla();
     };
@@ -140,8 +142,13 @@
         listaUsuarios.forEach(usuario => {
             let fondoDes = "";
             let rolUsuario = listaRoles.find((id) => id._id == usuario.rol);
-            let rutaUsuario = listaRutas.find((id)=> id._id== usuario.ruta);
-            
+            let rutaUsuario = listaRutas.find((id) => id._id == usuario.ruta);
+            let printRuta = "";
+
+            if (typeof (rutaUsuario) !== "undefined") {
+                printRuta = rutaUsuario.nombreRuta;
+            }
+
             let estado = "";
 
             if (usuario.estado == "Activo") {
@@ -153,14 +160,13 @@
             }
 
             tbAdmin.innerHTML += `<tr ${fondoDes}>
-            <td>${usuario._id}</td>
             <td>${usuario.usuario}</td>
             <td>${usuario.nombre}</td>
             <td>${usuario.pApellido}</td>
             <td>${usuario.sApellido}</td>
             <td>${usuario.fechaNacimiento}</td>
             <td>${rolUsuario.tipoRol}</td>
-            <td>${rutaUsuario.nombreRuta}</td>
+            <td>${printRuta}</td>
             <td>${usuario.estado}</td>
             <td>
 

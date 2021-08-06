@@ -102,10 +102,8 @@
         let controlesEliminar = document.getElementsByClassName("btnEliminar");
 
         listaRutas.forEach((rutas) => {
-            let provincia = "";
 
             tbAdminRuta.innerHTML += `<tr>
-            <td>${rutas._id}</td>
             <td>${rutas.CTP}</td>
             <td>${rutas.nombreRuta}</td>
             <td>${rutas.provincia}</td>
