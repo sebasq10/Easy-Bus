@@ -20,21 +20,39 @@
 
     const mostrar_monedero = () => {
         //let userTemp= listaUsuariosfind(u => u.usuario == )
-        if (validarSesion()==true) {
+        if (validarSesion() == true) {
             let usuarioTemp = listaUsuarios.find(us => us.usuario == sessionStorage.key(0));
             let monederoTemp = listaMonederos.find(mo => mo.usuarioId == usuarioTemp._id);
-            monedero.value= monederoTemp.cantidadDinero
+            monedero.value = monederoTemp.cantidadDinero
         }
     }
 
     const validarMonto = (e) => {
-        if (validarSesion()==true) {
+        if (validarSesion() == true) {
             if (montoRecarga.value === "" || montoRecarga.value <= 0) {
                 window.alert("Por favor ingresar un monto valido.");
                 return;
             }
             let usuarioTemp = listaUsuarios.find(us => us.usuario == sessionStorage.key(0));
-            let monederoTemp = listaMonederos.find(mo => mo.usuarioId == usuarioTemp._id);            
+            let monederoTemp = listaMonederos.find(mo => mo.usuarioId == usuarioTemp._id);
+
+            if (typeof (monederoTemp) == "undefined") {
+                let newMonedero = {};
+                newMonedero.usuarioId == usuarioTemp._id;
+
+                fetch(`${url}/monederos`, {
+                    headers: {
+                        Accept: "application/json",
+                        "Content-type": "application/json",
+                    },
+                    method: "POST",
+                    body: JSON.stringify(newMonedero),
+                })
+                    .then((res) => monederoTemp= res.body)
+                    .catch((error) => console.log(error));
+                
+            }
+
             tempID = monederoTemp._id;
             monederoTemp.cantidadDinero = monederoTemp.cantidadDinero + parseInt(montoRecarga.value);
             fetch(`${url}/monederos/${tempID}`, {
@@ -51,13 +69,13 @@
             window.alert("Monto Recargado");
             limpiar();
         }
-        };
+    };
 
-    const limpiar = () =>{
+    const limpiar = () => {
         montoRecarga.value = "";
     }
 
 
     inicializar();
-    
+
 })();
