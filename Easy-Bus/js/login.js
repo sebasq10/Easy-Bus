@@ -12,11 +12,17 @@
         btnIngresar.onclick = validarUsuario;
 
         await fetchUsuarios();
+        await fetchRoles();
+        await fetchMonederos();
     };
     
     const validarUsuario = (e) => {
-
+        console.log(listaRoles);
         let user = listaUsuarios.find(usu => usu.usuario == adminUser.value);
+        let rolTemp = listaRoles.find(rol=> rol.tipoRol== "cliente"); 
+        let rolATemp = listaRoles.find(rol=> rol.tipoRol== "admin"); 
+        let monederoTemp = listaMonederos.find(mon => mon.usuarioId == user._id) 
+
 
         if (adminUser.value === "" || adminPass.value === "") {
             window.alert("Por favor rellenar todos los campos.");
@@ -32,10 +38,14 @@
         }
         if (user.usuario === adminUser.value && adminPass.value === user.contrasena) {
             guardarSesion(user.usuario,user.contrasena);           
-            if(user.rol ==="60f849fb3eff242d77c9dece"){ /*_id admin*/
+            if(user.rol === rolATemp._id){ //no sirve 
                 window.location = "./usuariosAdmin.html";
-            }else if (user.rol ==="60f84a033eff242d77c9ded2") { /*_id Cliente*/
-                window.location = "./indexCliente.html";
+            }else if (user.rol ===rolTemp._id) {  //no sirve 
+                if (typeof (monederoTemp) === "undefined") { //no sirve 
+                    window.location = "./crearMonedero.html";
+                } else {
+                    window.location = "./indexCliente.html";
+                }
             }else{
                 window.location = "./indexChofer.html";
             }

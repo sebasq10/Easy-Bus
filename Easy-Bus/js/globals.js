@@ -7,6 +7,7 @@ let listaTransacciones = [];
 const usuario = {};
 const rutas = {};
 const transaccion = {};
+const monedero = {};
 
 
 const url = `http://localhost:5000`;

@@ -11,6 +11,10 @@
     let estado = {};
     let btnAceptar = {};
     let btnLimpiar = {};
+    let usuarioId = {};
+    let cantidadDinero = {};
+    let tarjetas = {};
+
 
     const inicializar = async () => {
         usuario = document.querySelector('#usuario');
@@ -26,6 +30,7 @@
         btnLimpiar.onclick = limpiarDatos;
         await fetchUsuarios();
         await fetchRoles();
+        await fetchMonederos();
         bind();
     };
 
@@ -37,32 +42,32 @@
         sApellido.onchange = infoTarget;
         fechaNacimiento.onchange = infoTarget;
         estado = infoTarget;
+
+        usuarioId = infoTargetMonedero;
+        cantidadDinero = infoTargetMonedero;
+        tarjetas = infoTargetMonedero;        
     };
 
     const infoTarget = (e) => {
         const { name, value } = e.target;
-        //console.log(name, ':', value)
         usuario[name] = value;
     };
 
-
     const crearUsuario = async () => {
+
         let userTemp = listaUsuarios.find(usn => usn.usuario == usuario.value);
         let rolTemp = listaRoles.find(rol=> rol.tipoRol== "cliente");
         usuario.rol= rolTemp._id;
-
+        
         if (nombre.value === "" || pApellido.value === "" || sApellido.value === "" || fechaNacimiento.value === ""
             || usuario.value === "" || contrasena.value === "" || contrasenaConf.value === "") {
             window.alert("Por favor rellenar todos los campos.");
             return;
         }
-
         if (contrasena.value !== contrasenaConf.value) {
             window.alert("La confirmación de contraseña es diferente. ");
             return;
         }
-        
-        //Arreglar Sebas TypeOf
         if (typeof (userTemp) === "undefined") {
 
             fetch(`${url}/usuarios`, {
@@ -75,6 +80,7 @@
             })
                 .then((res) => console.log(res))
                 .catch((error) => console.log(error));
+            
         } else {
             window.alert("El usuario ya existe. Utilice Otro");
         }

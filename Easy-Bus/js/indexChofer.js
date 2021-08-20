@@ -12,11 +12,18 @@
         pasajero = document.querySelector('#pasajero');
         costoRuta = document.querySelector('#costoRuta');
         btnCobrar.onclick = validarMonto;
+
         await fetchUsuarios();
         await fetchMonederos();
         await fetchRutas();
+        cargarRuta();
     };
-
+    const cargarRuta = (e) => { 
+        let usuarioTemp = listaUsuarios.find(us => us.usuario == sessionStorage.key(0));
+        let rutasTemp = listaRutas.find((x) => x._id == usuarioTemp.ruta);
+        document.getElementById(lblruta).value=rutasTemp.nombreRuta;
+        document.getElementById(costoRuta).value=rutasTemp.precio;
+    };
     const validarMonto = (e) => {
         let hayFondos = true;
 
