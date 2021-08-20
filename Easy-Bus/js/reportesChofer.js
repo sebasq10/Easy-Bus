@@ -13,7 +13,7 @@
     };
 
     const bind = () => {
-        fechaIngreso.onchange= infoTarget;
+        fechaIngreso.onchange = infoTarget;
     };
 
     const infoTarget = (e) => {

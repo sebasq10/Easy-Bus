@@ -101,7 +101,6 @@
                     .catch((error) => console.log(error));
 
                 limpiar();
-                return;
             }
         }
     };

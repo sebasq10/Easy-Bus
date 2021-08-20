@@ -13,11 +13,11 @@ const monederoSchema = new Schema({
         type: Number,
         default: 0
     },
-    tarjetas:{
-        tarjeta1: String,
-        tarjeta2: String,
-        tarjeta3: String
+    tarjetas: {
+        type: String,
+        trim: true
     }
+
 });
 
 module.exports = mongoose.model('Monederos', monederoSchema);

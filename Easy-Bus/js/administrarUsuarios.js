@@ -269,6 +269,11 @@
 
     const rellenarRol = () => {
 
+        var optionInicial= document.createElement("option");
+        optionInicial.defaultSelected;
+        optionInicial.text="Seleccione un Rol";
+        rolID.appendChild(optionInicial);
+
         listaRoles.forEach(rol => {
             var opt = document.createElement("option"); // Create the new element
             opt.value = rol._id; // valor de opcion
@@ -278,6 +283,12 @@
     };
 
     const rellenarRutas = () => {
+
+        var optionInicial= document.createElement("option");
+        optionInicial.defaultSelected;
+        optionInicial.text="Seleccione una Ruta";
+        ruta.appendChild(optionInicial);
+
         listaRutas.forEach(r => {
             var opt = document.createElement("option"); // Create the new element
             opt.value = r._id; // valor de opcion
