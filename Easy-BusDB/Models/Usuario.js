@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const dateFormat = require('dateformat');
 const { ObjectId } = require('bson');
 
-let fechaActual = dateFormat(new Date(), 'dd/mm/yyyy');
+let fechaActual = dateFormat(new Date(), 'isoDate');
 
 const Schema = mongoose.Schema;
 

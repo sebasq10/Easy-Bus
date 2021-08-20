@@ -2,9 +2,11 @@ let listaUsuarios = [];
 let listaRutas = [];
 let listaRoles = [];
 let listaMonederos = [];
+let listaTransacciones = [];
+
 const usuario = {};
 const rutas = {};
-const transacciones = {};
+const transaccion = {};
 
 
 const url = `http://localhost:5000`;
@@ -91,10 +93,10 @@ const buscarCtp = (ctp) => {
 };
 /*** SESION STORAGE ***/
 
-function guardarSesion(idUser, claveUser){  
+function guardarSesion(idUser, claveUser) {
     sessionStorage.setItem(idUser, claveUser);
 };
-const validarSesion = () =>{
+const validarSesion = () => {
     let user = listaUsuarios.find(usu => usu.usuario == sessionStorage.key(0));
     if (typeof (user) == "undefined") {
         window.alert("Por favor vuelva a ingresar sus datos de inicio de sesion.");
@@ -103,14 +105,14 @@ const validarSesion = () =>{
     }
     if (sessionStorage.key(0) == user.usuario && sessionStorage.getItem(sessionStorage.key(0)) == user.contrasena) {
         return true;
-      } else if(sessionStorage.key(0) != user.usuario || sessionStorage.getItem(sessionStorage.key(0))!=user.contrasena) {
-            return false;
-      } else {
+    } else if (sessionStorage.key(0) != user.usuario || sessionStorage.getItem(sessionStorage.key(0)) != user.contrasena) {
+        return false;
+    } else {
         window.alert("Sorry, your browser does not support Web Storage...");
-     }
+    }
 };
 
-function salirSesion(idUser, claveUser){   
+function salirSesion(idUser, claveUser) {
     sessionStorage.clear();
     window.alert("Gracias por su visita.");
     window.location.href = "login.html";

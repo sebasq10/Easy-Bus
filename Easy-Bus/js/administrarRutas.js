@@ -165,5 +165,6 @@
         tabla();
         location.reload();
     };
+    
     inicializar();
 })();

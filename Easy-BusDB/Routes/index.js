@@ -5,7 +5,7 @@ const usuarioController = require('../Controllers/usuarioControllers');
 const rolController = require('../Controllers/rolControllers');
 const rutasController = require('../Controllers/rutaControllers');
 const monederoController = require('../Controllers/monederoControllers');
-const transaccionController = require('../Controllers/monederoControllers');
+const transaccionController = require('../Controllers/transaccionControllers');
 
 
 module.exports = function () {

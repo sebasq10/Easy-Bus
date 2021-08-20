@@ -44,5 +44,6 @@
             window.alert("Usuario o contrasena incorrectos.");
         }
     };
+    
     inicializar();   
 })();
