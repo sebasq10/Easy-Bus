@@ -86,10 +86,10 @@
             }
         })
 
-        if(hayTransaccion){
-            gastosMes.innerHTML= "" + monto;
-        }else{
-            gastosMes.innerHTML= "No hubo gastos este mes";
+        if (hayTransaccion) {
+            gastosMes.innerHTML = "" + monto;
+        } else {
+            gastosMes.innerHTML = "No hubo gastos este mes";
         }
 
     };
@@ -107,6 +107,7 @@
             let existe = false;
             let id = 0;
 
+            //Para que no se repitan opciones dentro del combo box "anios"
             while ((typeof (opcionesAnios) != "undefined") && (id <= opcionesAnios.length - 1)) {
                 if (opcionesAnios[id].value == fecha[0]) {
                     existe = true;
@@ -130,6 +131,8 @@
         mes.appendChild(optionInicial);
 
         transaccionesCliente.forEach(trans => {
+            //YYYY-MM-DD
+            //[0]-[1]-[2]
             let fecha = trans.fecha.split('-');
             let opcionesMeses = Array.from(mes.options);
             let existe = false;

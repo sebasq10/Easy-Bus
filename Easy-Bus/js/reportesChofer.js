@@ -50,6 +50,7 @@
 
         await fetchTransacciones();
         await fetchUsuarios();
+        
         let chofer = listaUsuarios.find(usuario => usuario.usuario == sessionStorage.key(0));
 
         listaTransacciones.forEach(trans => {
