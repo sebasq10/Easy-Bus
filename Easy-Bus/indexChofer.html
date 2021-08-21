@@ -48,32 +48,33 @@
             </div>
         </header>
 
-        <div class="container-fluid h-100">
-            <div class="row m-0 align-items-center h-100">
-                <div class="col-3 mx-auto g-3 rounded p-5 mb-5"
-                    style="background-color: #fff; height: 600px; width: 400px;">
-                    <h1 class="text-center mb-5">Easy-Bus</h1>
-                    <h4 class="text-center mb-4">Caja</h3>
-                        <div class="mb-3">
-                            <label for="pasajero" class="form-label">Pasajero</label>
-                            <input type="text" name="pasajero" id="pasajero" placeholder="Usuario del pasajero"
-                                class="form-control">
-                        </div>
 
-                        <div class="mb-5">
-                            <label for="costoRuta" class="form-label">Costo de Ruta</label>
-                            <input type="number" name="costoRuta" id="costoRuta" class="form-control">
-                        </div>
-                        <div class="mb-5">
-                            <label for="cantPasajero" class="form-label">Cantidad de Pasajeros a Cobrar</label>
-                            <input type="number" name="cantPasajero" id="cantPasajero" class="form-control">
-                        </div>
+    <div class="container-fluid h-100" >
+        <div class="row m-0 align-items-center h-100" >
+          <div class="col-3 mx-auto g-3 rounded p-5 mb-5" style="background-color: #fff; height: 750px; width: 400px;">
+            <h1 class="text-center mb-5">Easy-Bus</h1>
+            <h4 class="text-center mb-4">Caja</h3>
+            <div class="mb-3">
+              <label for="pasajero" class="form-label">Pasajero</label>
+              <input type="text" name="pasajero" id="pasajero" placeholder="Usuario del pasajero" class="form-control">
+            </div>
+            <div class="mb-5">
+                <label for="ruta" class="form-label">Ruta</label>
+                <input readonly type="text" name="lblruta" id="lblruta" class="form-control">
+              </div>
+            <div class="mb-5">
+                <label for="costoRuta" class="form-label">Costo de Ruta</label>
+                <input readonly type="text" name="costoRuta" id="costoRuta" class="form-control">
+              </div>
+            <div class="mb-5">
+              <label for="cantPasajero" class="form-label">Cantidad de Pasajeros a Cobrar</label>
+              <input type="number" name="cantPasajero" id="cantPasajero" class="form-control">
+            </div>
+            <div>
+              <button id="btnCobrar" type="btnCobrar" class="btn btn-lg btn-block" 
+                style="background-color: #4512ff; color: #fff; width: 100%;">Aplicar Cobro</button>
+                <br></br>
 
-                        <div>
-                            <button id="btnCobrar" type="btnCobrar" class="btn btn-lg btn-block"
-                                style="background-color: #4512ff; color: #fff; width: 100%;">Aplicar Cobro</button>
-                            <br></br>
-                        </div>
                 </div>
             </div>
         </div>

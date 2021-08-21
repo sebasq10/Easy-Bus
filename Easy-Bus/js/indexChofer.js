@@ -12,16 +12,23 @@
         pasajero = document.querySelector('#pasajero');
         costoRuta = document.querySelector('#costoRuta');
         btnCobrar.onclick = validarMonto;
+
         await fetchUsuarios();
         await fetchMonederos();
         await fetchRutas();
+        cargarRuta();
     };
-
+    const cargarRuta = (e) => {
+        let usuarioTemp = listaUsuarios.find(us => us.usuario == sessionStorage.key(0));
+        let rutasTemp = listaRutas.find((x) => x._id == usuarioTemp.ruta);
+        console.log(rutasTemp.nombreRuta);
+        document.getElementById('lblruta').value = rutasTemp.nombreRuta;
+        document.getElementById('costoRuta').value = rutasTemp.precio;
+    };
     const validarMonto = (e) => {
         let hayFondos = true;
 
         if (validarSesion() == true) {
-
             console.log(sessionStorage.key(0), sessionStorage.getItem(sessionStorage.key(0)));
             if (cantPasajero.value === "" || cantPasajero.value === 0) {
                 window.alert("Por favor ingresar la cantidad de pasajeros a cobrar.");
