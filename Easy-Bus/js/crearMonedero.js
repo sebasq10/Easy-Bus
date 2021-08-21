@@ -43,6 +43,7 @@
             
             window.alert("Tarjeta Ingresada");
             limpiar();
+            await fetchMonederos();
         
     };
 

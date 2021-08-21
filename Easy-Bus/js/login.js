@@ -21,7 +21,8 @@
         let user = listaUsuarios.find(usu => usu.usuario == adminUser.value);
         let rolTemp = listaRoles.find(rol=> rol.tipoRol== "cliente"); 
         let rolATemp = listaRoles.find(rol=> rol.tipoRol== "admin"); 
-        let monederoTemp = listaMonederos.find(mon => mon.usuarioId == user._id) 
+        let monederoTemp = listaMonederos.find(mon => mon.usuarioId == user._id);
+        let encriptedPS = btoa(adminPass.value);
 
 
         if (adminUser.value === "" || adminPass.value === "") {
@@ -36,12 +37,20 @@
             window.alert("Usuario Inactivo.");
             return;
         }
-        if (user.usuario === adminUser.value && adminPass.value === user.contrasena) {
+
+        console.log(encriptedPS);
+        console.log(user.contrasena);
+        console.log(atob(encriptedPS));
+        console.log(atob(user.contrasena));
+
+
+
+        if (user.usuario === adminUser.value && encriptedPS === user.contrasena) {
             guardarSesion(user.usuario,user.contrasena);           
-            if(user.rol === rolATemp._id){ //no sirve 
+            if(user.rol === rolATemp._id){ 
                 window.location = "./usuariosAdmin.html";
-            }else if (user.rol ===rolTemp._id) {  //no sirve 
-                if (typeof (monederoTemp) === "undefined") { //no sirve 
+            }else if (user.rol ===rolTemp._id) {  
+                if (typeof (monederoTemp) === "undefined") { 
                     window.location = "./crearMonedero.html";
                 } else {
                     window.location = "./indexCliente.html";

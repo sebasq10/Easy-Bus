@@ -22,13 +22,13 @@
         monedero[name] = value;
     };
 
-    const IngresarTarjeta = (e) => {
+    const IngresarTarjeta = async() => {
 
         let userTemp = listaUsuarios.find(usn => usn.usuario == sessionStorage.key(0));
         let monederoTemp = listaMonederos.find(mon => mon.usuarioId == userTemp._id);
-                monederoTemp.tarjetas == numTarjeta.value;      
+                monederoTemp.tarjetas = btoa(numTarjeta.value);      
 
-                fetch(`${url}/monederos/${monederoTemp}`, {
+                fetch(`${url}/monederos/${monederoTemp._id}`, {
                     headers: {
                         Accept: "application/json",
                         "Content-type": "application/json",
@@ -38,14 +38,17 @@
                 })
                     .then((res) => console.log(res))
                     .catch((error) => console.log(error));
-            
+                await fetchMonederos();
             window.alert("Tarjeta Actulizada");
+
             limpiar();
+            window.location = "./indexCliente.html";
+
         
     };
 
     const limpiar = () => {
-        montoRecarga.value = "";
+        numTarjeta.value = "";
     }
 
 

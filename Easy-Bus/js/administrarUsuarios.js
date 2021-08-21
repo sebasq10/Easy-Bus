@@ -30,6 +30,7 @@
         await fetchRoles();
         await fetchRutas();
         await fetchUsuarios();
+        await fetchMonederos();
 
         //rellena combo Boxes
         rellenarRol();
@@ -38,7 +39,6 @@
         bind();
         tabla();
     };
-
 
     const bind = () => {
         nombre.onchange = infoTarget;
@@ -74,6 +74,9 @@
                 window.alert("El usuario ya existe. Utilice otro.");
                 return;
             }
+
+            usuario.contrasena = btoa(contrasena.value)
+
             fetch(`${url}/usuarios`, {
                 headers: {
                     Accept: "application/json",
@@ -84,6 +87,14 @@
             })
                 .then((res) => console.log(res))
                 .catch((error) => console.log(error));
+                await fetchUsuarios();
+
+                let usuarioID = listaUsuarios.find(uid => uid.usuario == usuario.usuario);
+                monedero.usuarioId = usuarioID._id;
+                monedero.tarjetas = "0"
+                crearMonedero(monedero);
+
+
         } else {
 
             let user = listaUsuarios.find((x) => x._id == tempID);
@@ -127,6 +138,19 @@
         contrasenaConf.value = '';
         rolID.text = 'Seleccione una opcion';
         location.reload();
+    };
+
+    const crearMonedero = (monedero) => {
+        fetch(`${url}/monederos`, {
+            headers: {
+                Accept: "application/json",
+                "Content-type": "application/json",
+            },
+            method: "POST",
+            body: JSON.stringify(monedero),
+        })
+            .then((res) => console.log(res))
+            .catch((error) => console.log(error));
     };
 
     const tabla = () => {
@@ -210,9 +234,12 @@
         fechaNacimiento.value = user["fechaNacimiento"];
         usn.value = user["usuario"];
 
-        if (user["rol"] == "60f849fb3eff242d77c9dece") { /*_id admin*/
+        let rolTemp = listaRoles.find(rol=> rol.tipoRol== "chofer"); 
+        let rolATemp = listaRoles.find(rol=> rol.tipoRol== "admin"); 
+
+        if (user["rol"] == rolATemp._id) { 
             rolID.value = 'Administrador';
-        } else if (user["rolID"] == "60f849fe3eff242d77c9ded0") { /*_id chofer*/
+        } else if (user["rolID"] == rolTemp._id) { 
             rolID.value = 'Chofer';
         } else {
             rolID.value = 'Cliente';

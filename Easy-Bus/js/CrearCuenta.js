@@ -68,6 +68,8 @@
             return;
         }
         if (typeof (userTemp) === "undefined") {
+            usuario.contrasena = btoa(contrasena.value); //btoa Metodo propio de html para encriptar
+            console.log(usuario.contrasena);
 
             fetch(`${url}/usuarios`, {
                 headers: {
@@ -84,12 +86,15 @@
 
             let usuarioID = listaUsuarios.find(uid => uid.usuario == usuario.usuario);
             monedero.usuarioId = usuarioID._id;
+            monedero.tarjetas = "0"
             crearMonedero(monedero);
 
         } else {
             window.alert("El usuario ya existe. Utilice Otro");
         }
         limpiarDatos();
+        window.location = "./login.html";
+
 
     };
     const crearMonedero = (monedero) => {
