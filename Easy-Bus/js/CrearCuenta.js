@@ -1,6 +1,6 @@
 (function () {
 
-    let usuario = {};
+    let usuarioTxt = {};
     let contrasena = {};
     let nombre = {};
     let pApellido = {};
@@ -17,7 +17,7 @@
 
 
     const inicializar = async () => {
-        usuario = document.querySelector('#usuario');
+        usuarioTxt = document.querySelector('#usuario');
         contrasena = document.querySelector('#contrasena');
         contrasenaConf = document.querySelector('#contrasenaConf');
         nombre = document.querySelector('#nombre');
@@ -26,8 +26,7 @@
         fechaNacimiento = document.querySelector('#fechaNacimiento');
         btnAceptar = document.querySelector('#btnAceptar');
         btnLimpiar = document.querySelector('#btnLimpiar');
-        btnAceptar.onclick = crearUsuario;
-        btnLimpiar.onclick = limpiarDatos;
+
         await fetchUsuarios();
         await fetchRoles();
         await fetchMonederos();
@@ -35,17 +34,16 @@
     };
 
     const bind = () => {
-        usuario.onchange = infoTarget;
+        usuarioTxt.onchange = infoTarget;
         contrasena.onchange = infoTarget;
         nombre.onchange = infoTarget;
         pApellido.onchange = infoTarget;
         sApellido.onchange = infoTarget;
         fechaNacimiento.onchange = infoTarget;
         estado = infoTarget;
+        btnAceptar.onclick = crearUsuario;
+        btnLimpiar.onclick = limpiarDatos;
 
-        usuarioId = infoTargetMonedero;
-        cantidadDinero = infoTargetMonedero;
-        tarjetas = infoTargetMonedero;        
     };
 
     const infoTarget = (e) => {
@@ -54,13 +52,14 @@
     };
 
     const crearUsuario = async () => {
+        let userTemp = listaUsuarios.find(usn => usn.usuario == usuarioTxt.value);
+        let rolTemp = listaRoles.find(rol => rol.tipoRol == "cliente");
+        usuario.rol = rolTemp._id;
 
-        let userTemp = listaUsuarios.find(usn => usn.usuario == usuario.value);
-        let rolTemp = listaRoles.find(rol=> rol.tipoRol== "cliente");
-        usuario.rol= rolTemp._id;
-        
+        let monedero = {};
+
         if (nombre.value === "" || pApellido.value === "" || sApellido.value === "" || fechaNacimiento.value === ""
-            || usuario.value === "" || contrasena.value === "" || contrasenaConf.value === "") {
+            || usuarioTxt.value === "" || contrasena.value === "" || contrasenaConf.value === "") {
             window.alert("Por favor rellenar todos los campos.");
             return;
         }
@@ -77,14 +76,33 @@
                 },
                 method: "POST",
                 body: JSON.stringify(usuario),
+
             })
                 .then((res) => console.log(res))
                 .catch((error) => console.log(error));
-            
+            await fetchUsuarios();
+
+            let usuarioID = listaUsuarios.find(uid => uid.usuario == usuario.usuario);
+            monedero.usuarioId = usuarioID._id;
+            crearMonedero(monedero);
+
         } else {
             window.alert("El usuario ya existe. Utilice Otro");
         }
         limpiarDatos();
+
+    };
+    const crearMonedero = (monedero) => {
+        fetch(`${url}/monederos`, {
+            headers: {
+                Accept: "application/json",
+                "Content-type": "application/json",
+            },
+            method: "POST",
+            body: JSON.stringify(monedero),
+        })
+            .then((res) => console.log(res))
+            .catch((error) => console.log(error));
     };
 
     const limpiarDatos = () => {
@@ -92,7 +110,7 @@
         pApellido.value = '';
         sApellido.value = '';
         fechaNacimiento.value = '';
-        usuario.value = '';
+        usuarioTxt.value = '';
         contrasena.value = '';
         contrasenaConf.value = '';
     };
