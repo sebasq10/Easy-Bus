@@ -37,10 +37,10 @@
     const crearRuta = async () => {
         //rutas['rutaID'] = listaRutas.length + 1;
         document.getElementById('btnLimpiar').style.visibility = 'visible';
-        
+
         if (btnAceptar.innerHTML === "Aceptar") {
             let rutaTemp = listaRutas.find(rt => rt.CTP == ctp.value);
-            if (typeof(rutaTemp) != "undefined"){
+            if (typeof (rutaTemp) != "undefined") {
                 window.alert("El CTP ya existe. Utilice otro.");
                 return;
             }
@@ -165,6 +165,6 @@
         tabla();
         location.reload();
     };
-    
+
     inicializar();
 })();

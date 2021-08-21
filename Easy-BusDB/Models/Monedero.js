@@ -7,7 +7,8 @@ const monederoSchema = new Schema({
     usuarioId: {
         type: ObjectId,
         ref: "Usuarios",
-        required: true
+        required: true,
+        unique: true
     },
     cantidadDinero: {
         type: Number,
